@@ -1,0 +1,38 @@
+<project name="JMiniDB" default="run" basedir=".">
+	<property name="src.dir" value="src">
+	</property>
+	<property name="bin.dir" value="bin">
+	</property>
+	<property name="lib.dir" value="lib">
+	</property>
+	<property name="jflex.cp" value="${lib.dir}/JFlex.jar">
+	</property>
+	<property name="java_cup.cp" value="bin/">
+	</property>
+
+	<target name="lex">
+		<java classname="JFlex.Main" classpath="${jflex.cp}" args="flex/lexer.flex">
+		</java>
+		<move file="flex/Scanner.java" todir="src/parse">
+		</move>
+	</target>
+
+	<target name="cup" depends="lex">
+		<java classname="java_cup.Main" classpath="${java_cup.cp}" args="-expect 10 cup/parser.cup">
+		</java>
+		<move file="parser.java" todir="src/parse">
+		</move>
+		<move file="sym.java" todir="src/parse">
+		</move>
+	</target>
+
+	<target name="compile" depends="cup">
+		<javac srcdir="${src.dir}" destdir="${bin.dir}">
+		</javac>
+	</target>
+
+	<target name="run" depends="compile">
+		<java classname="parse.Main" classpath="${bin.dir}">
+		</java>
+	</target>
+</project>

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/16/trunk/yssyMobileClient/src/com/bbs/paraser
+END
+PostParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/16/trunk/yssyMobileClient/src/com/bbs/paraser/PostParser.java
+END
+ThemeArticleParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/16/trunk/yssyMobileClient/src/com/bbs/paraser/ThemeArticleParser.java
+END
+TopTenParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/16/trunk/yssyMobileClient/src/com/bbs/paraser/TopTenParser.java
+END
+ReplyParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/16/trunk/yssyMobileClient/src/com/bbs/paraser/ReplyParser.java
+END
+TopicPostListParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/16/trunk/yssyMobileClient/src/com/bbs/paraser/TopicPostListParser.java
+END
+PostListParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/16/trunk/yssyMobileClient/src/com/bbs/paraser/PostListParser.java
+END

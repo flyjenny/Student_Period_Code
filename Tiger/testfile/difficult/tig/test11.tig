@@ -1,0 +1,22 @@
+/* non-associate the expr included in the /* */ will report syntax error */
+
+let
+	var a := 1
+	var b := "sdlfkj"
+in
+/*	1 = 2 = 3;	*/
+/*	a := a:= 1;	*/
+	a := (a := 1);			/* Unmatched Type */
+	1 = (2 = 3)
+/*	1<2<3;		*/
+/*	1>2>3		*/
+/*	1<=2<=3;	*/
+/*	1>=2>=3;	*/
+/*	1<>2<>3;	*/
+/*	b<b<b;		*/
+/*	b>b>b;		*/
+/*	b<=b<=b;	*/
+/*	b>=b>=b;	*/
+/*	b=b=b;		*/
+/*	b<>b<>b		*/
+end

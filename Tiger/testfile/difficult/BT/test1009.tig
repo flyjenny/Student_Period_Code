@@ -1,0 +1,6 @@
+let
+	type rec = {}
+	function kin(a : rec) = ()
+in
+	kin(nil)
+end

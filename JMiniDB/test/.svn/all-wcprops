@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/44/trunk/JMiniDB/test
+END
+test2.sql
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/36/trunk/JMiniDB/test/test2.sql
+END
+test3.sql
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/30/trunk/JMiniDB/test/test3.sql
+END
+test.sql
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/44/trunk/JMiniDB/test/test.sql
+END
+test1.sql
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/37/trunk/JMiniDB/test/test1.sql
+END

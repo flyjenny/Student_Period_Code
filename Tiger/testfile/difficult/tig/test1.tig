@@ -1,0 +1,98 @@
+/* Basic Dec Test */
+
+let
+	type a = int
+	type b = int
+	type c = array of int
+	type d = array of b
+	type e = {}
+	type f = {a:a, b:b, c:c}   
+	type g = e
+	type h = f
+	type i = c
+	type j = {a:a, a:b, c:c}	 /* error line multiple fields with same name */
+	
+	var a:a := 1
+	var b:b := a
+	var c:c := c [10] of a
+	var d:d := c [10] of a		/* error type dismatch */
+	var d:d := c				/* error type dismatch */
+	var a:i := d				/* undefined variable */
+	var a:i := c
+		
+	var a:e := e{}
+	var a:e := g{}
+	var a:f := f{a = 1, b = 1, c = c}
+	var a:h := f{a = 1, b = 1, c = c}
+	var a:f := h{a = 1, b = 1, c = c}
+	var a:h := h{a = 1, b = 1, c = c}
+	
+	var a:j := nil
+	
+	var a := nil				/* error nil occur */
+	var a:a := nil				/* type dismatch */
+	var a:b := nil				/* type dismatch */
+	var a:c := nil				/* type dismatch */
+	var a:d := nil				/* type dismatch */
+	var a:e := nil
+	var a:f := nil
+	var a:g := nil
+	var a:h := nil
+	var a:i := nil				/* type dismatch */
+	var a:j := nil
+
+	var a := 1
+	var a:a := 1
+	var a:b := 1
+	var a:c := 1				/* type dismatch */
+	var a:d := 1				/* type dismatch */
+	var a:e := 1				/* type dismatch */
+	var a:f := 1				/* type dismatch */
+	var a:g := 1				/* type dismatch */
+	var a:h := 1				/* type dismatch */
+	var a:i := 1				/* type dismatch */
+	var a:j := 1				/* type dismatch */
+
+	var a := "a"				
+	var a:a := "a"				/* type dismatch */
+	var a:b := "a"				/* type dismatch */
+	var a:c := "a"				/* type dismatch */
+	var a:d := "a"				/* type dismatch */
+	var a:e := "a"				/* type dismatch */
+	var a:f := "a"				/* type dismatch */
+	var a:g := "a"				/* type dismatch */
+	var a:h := "a"				/* type dismatch */
+	var a:i := "a"				/* type dismatch */
+	var a:j := "a"				/* type dismatch */
+	
+	var a := ()					/* Void Can't Be Assigned By */
+	var a:a := ()				/* Void Can't Be Assigned By */
+	var a:b := ()				/* Void Can't Be Assigned By */
+	var a:c := ()				/* Void Can't Be Assigned By */
+	var a:d := ()				/* Void Can't Be Assigned By */
+	var a:e := ()				/* Void Can't Be Assigned By */
+	var a:f := ()				/* Void Can't Be Assigned By */
+	var a:g := ()				/* Void Can't Be Assigned By */
+	var a:h := ()				/* Void Can't Be Assigned By */
+	var a:i := ()				/* Void Can't Be Assigned By */
+	var a:j := ()				/* Void Can't Be Assigned By */
+
+	function a(a:int, b:int, c:int) : int = a
+	function b(a:int, b:int) : int = c						/* undefined variable */
+	function c(a:int, b:int, c:int) : int = a(a,b,c)		/* undefined function call */
+	function d(aa:int, b:int, c:int) : int = a(aa,b,c)		
+	function e(a:int, b:int, c:int) = a						/* unmatched return type | procedure shouldn't return value */
+	function f(aa:int, b:int, c:int) = a(aa,b,c)			/* unmatched return type | procedure shouldn't return value */
+	function g(a:int, b:int, c:int) = a						/* unmatched return type | procedure shouldn't return value */
+	function h(a:int, b:int, c:int) = ()	
+	function i(a:int, b:int, c:int) = let var a := 1 in end
+	
+	var a := 1
+	
+	function a(a:int) : int = a
+	function b() : int = b()
+	function c(a:int) = ()
+	function d() = ()
+	
+in
+end

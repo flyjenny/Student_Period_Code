@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/minimizetotray/!svn/ver/59/trunk/source
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/minimizetotray/!svn/ver/58/trunk/source/Makefile.in
+END
+trayMenuItem.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/minimizetotray/!svn/ver/53/trunk/source/trayMenuItem.cpp
+END
+MinimizeToTray.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/minimizetotray/!svn/ver/57/trunk/source/MinimizeToTray.cpp
+END
+trayRoutine.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/minimizetotray/!svn/ver/57/trunk/source/trayRoutine.cpp
+END
+trayInterface.idl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/minimizetotray/!svn/ver/53/trunk/source/trayInterface.idl
+END
+trayMenuItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/minimizetotray/!svn/ver/50/trunk/source/trayMenuItem.h
+END
+trayRoutine.h
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/minimizetotray/!svn/ver/57/trunk/source/trayRoutine.h
+END

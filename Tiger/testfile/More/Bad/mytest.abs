@@ -1,0 +1,16 @@
+          LetExp(
+           DecList(
+            TypeDec(a,
+             RecordTy(
+              Fieldlist(
+               i
+               int,
+               true,
+               Fieldlist(
+                i
+                string,
+                true,
+                Fieldlist())))),
+            DecList()),
+           SeqExp(
+            ExpList()))

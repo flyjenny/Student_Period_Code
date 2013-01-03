@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/minimizetotray/!svn/ver/59/trunk
+END
+install.rdf
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/minimizetotray/!svn/ver/57/trunk/install.rdf
+END
+LICENCE
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/minimizetotray/!svn/ver/51/trunk/LICENCE
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/minimizetotray/!svn/ver/55/trunk/Makefile.in
+END
+jar.mn
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/minimizetotray/!svn/ver/55/trunk/jar.mn
+END
+build.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/minimizetotray/!svn/ver/57/trunk/build.py
+END
+makefiles.sh
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/minimizetotray/!svn/ver/41/trunk/makefiles.sh
+END

@@ -1,0 +1,6 @@
+let 
+	type rectype = {name:string, id:int}
+	var a:= rectype
+in
+	a
+end

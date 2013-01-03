@@ -1,0 +1,4 @@
+let type a = {}
+	var a:a := (1;2;3;4;nil;nil)
+in
+end

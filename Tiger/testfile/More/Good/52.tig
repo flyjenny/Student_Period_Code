@@ -1,0 +1,9 @@
+/* locals hide globals */
+let
+	var a :=0
+
+	function g (a : int) : int = a 
+in
+    a := 3;
+    printi(g (2))
+end

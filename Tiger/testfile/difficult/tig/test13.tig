@@ -1,0 +1,29 @@
+/* basic lvalue */
+
+let
+	type a = array of int
+	type b = {a : int, b : int }
+	type c = array of b
+	
+	var a :a := a [10] of 0
+	var b :b := b{a = 1, b = 1}
+	var c :c := c [10] of nil
+in
+
+	a;
+	a[10];
+	b;
+	b.a;
+	b.b;
+	c;
+	c[10].a;
+	c[10].b;
+	c[0].a;
+	
+	a.a;		/* Need Record Type */
+	a.b;		/* Need Record Type	*/
+	b[10];		/* Need Array Type 	*/
+	b[10].a;	/* Need Array Type	*/
+	c.a;		/* Need Record Type	*/
+	c.b			/* Need Record Type	*/
+end

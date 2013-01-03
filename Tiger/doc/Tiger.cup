@@ -1,0 +1,651 @@
+package Tiger;
+import java.io.FileOutputStream;
+import java_cup.runtime.*;
+import java.io.Reader;
+import java.io.FileReader;
+import ErrorMsg.*;
+import Absyn.*;
+import Symbol.Symbol;
+import Semant.*;
+
+parser code {:
+ public static String record;
+   public static void main(String[] args){
+      try{
+	   record = args[0];
+       Overall.begin();
+       parser p = new parser(new Lexer(new FileReader(args[0])));
+       Object result = p.parse().value;
+      }catch(Exception e ){
+	   e.printStackTrace();
+	  } 	 
+   }
+:};
+
+/* Terminals (tokens returned by the scanner). */
+terminal ARRAY;
+terminal BREAK; 
+terminal DO;
+terminal ELSE;
+terminal END;
+terminal FOR;
+terminal FUNC;
+terminal IF;
+terminal IN;
+terminal LET;
+terminal NIL;
+terminal OF;
+terminal THEN;
+terminal TO;
+terminal TYPE; 
+terminal VAR;
+terminal WHILE;
+terminal COMMA;
+terminal COLON;
+terminal SEMICOLON;
+terminal LPAREN;
+terminal RPAREN;
+terminal LBRACKET;
+terminal RBRACKET;
+terminal LBRACE;
+terminal RBRACE;
+terminal PERIOD;
+terminal PLUS;
+terminal MINUS;
+terminal MULT;
+terminal SLASH;
+terminal EQ;
+terminal NOTEQ;
+terminal LT;
+terminal LE;
+terminal GT;
+terminal GE;
+terminal AND;
+terminal OR;
+terminal ASSIGN;
+terminal String ID;
+terminal Integer INTEGER;
+terminal String STRING_LITERAL;
+
+
+/* Non terminals */
+non terminal Program_kl;
+non terminal Exp Exp_kl;
+non terminal StringExp StringExp_kl;
+non terminal IntExp IntExp_kl;
+non terminal NilExp NilExp_kl;
+non terminal OpExp OpExp_kl;
+non terminal BreakExp BreakExp_kl;
+non terminal LetExp LetExp_kl;
+non terminal WhileExp WhileExp_kl;
+non terminal ForExp ForExp_kl;
+non terminal IfExp IfExp_kl;
+non terminal ArrayExp ArrayExp_kl;
+non terminal SeqExp SeqExp_kl;
+non terminal VarDec VarDec_kl;
+non terminal CallExp CallExp_kl;
+non terminal TypeDec TypeDec_kl,TypeDecList_kl;
+non terminal FunctionDec FunctionDec_kl,FunctionDecList_kl;
+non terminal DecList DecList_kl;
+non terminal NameTy NameTy_kl;
+non terminal RecordTy RecordTy_kl;
+non terminal ArrayTy ArrayTy_kl;
+non terminal RecordExp RecordExp_kl;
+non terminal ExpList ExpList_kl,ExpListOpt_kl,ExpSeq_kl,ExpSeqOpt_kl;
+non terminal FieldList FieldList_kl,FieldListOpt_kl;
+non terminal AssignExp AssignExp_kl;
+non terminal VarExp VarExp_kl;
+non terminal FieldExpList FieldExpList_kl,FieldExpListOpt_kl;
+non terminal Var Lvalue_kl;
+non terminal NameTy TypeOpt_kl;
+non terminal Dec Dec_kl;
+non terminal Ty Type_kl;
+non terminal SimpleVar SimpleVar_kl;
+non terminal FieldVar FieldVar_kl;
+non terminal SubscriptVar SubscriptVar,SubscriptVar2;
+
+/* Precedences */
+precedence right FUNC, TYPE; 
+precedence right OF;
+precedence right DO,ELSE,THEN;
+precedence nonassoc ASSIGN; 
+precedence left OR;
+precedence left AND;
+precedence right EQ,NOTEQ,LT,LE,GT,GE;
+precedence left PLUS,MINUS;
+precedence left MULT,SLASH;
+precedence left LBRACKET;
+
+start with Program_kl;
+
+/* The grammar */
+Program_kl ::= Exp_kl:exp{:
+     
+                //Print p = new Print(System.out);
+				//p.prExp(exp,10);
+				try{
+				   Semant typechecker = new Semant(Overall.myerror);
+				   typechecker.transProg(exp);
+				}catch(Exception e){
+				    e.printStackTrace();
+				}
+			:};
+
+Exp_kl ::= StringExp_kl:exp{:RESULT = exp;:}
+        |IntExp_kl:exp{:RESULT = exp;:}        
+	    |NilExp_kl:exp{:RESULT = exp;:}
+        |VarExp_kl:exp{:RESULT = exp;:}
+        |MINUS Exp_kl:exp{:RESULT = new OpExp(expleft,new IntExp(expleft,0),OpExp.MINUS,exp);:}
+		|OpExp_kl:exp{:RESULT = exp;:}
+		|AssignExp_kl:exp{:RESULT = exp;:}
+		|CallExp_kl:exp{:RESULT = exp;:}
+		|SeqExp_kl:exp{:RESULT = exp;:}
+		|RecordExp_kl:exp{:RESULT = exp;:}
+        |ArrayExp_kl:exp{:RESULT = exp;:}
+        |IfExp_kl:exp{:RESULT = exp;:} 
+        |WhileExp_kl:exp{:RESULT = exp;:}
+        |ForExp_kl:exp{:RESULT = exp;:}
+        |BreakExp_kl:exp{:RESULT = exp;:}
+        |LetExp_kl:exp{:RESULT = exp;:};
+    
+VarExp_kl ::= Lvalue_kl:var{:
+                              try{
+							     RESULT = new VarExp(varleft,var);
+							  }catch(Exception e){
+                                 Overall.myerror.error(varleft,"VarExp_kl");
+								 e.printStackTrace();
+							  }
+						 :};	
+						 
+StringExp_kl ::= STRING_LITERAL:string{:
+                              try{
+							     RESULT = new StringExp(stringleft,string);
+							  }catch(Exception e){
+                                  Overall.myerror.error(stringleft,"StringExp_kl");
+								  e.printStackTrace();
+							  }
+						 :};
+
+IntExp_kl ::= INTEGER:in{:
+                              try{
+							     RESULT = new IntExp(inleft,in);
+							  }catch(Exception e){
+                                 Overall.myerror.error(inleft,"IntExp_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+           
+NilExp_kl ::= NIL:nul{:
+                              try{
+							     RESULT = new NilExp(nulleft);
+							  }catch(Exception e){
+                                 Overall.myerror.error(nulleft,"NilExp_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+						 
+						 
+OpExp_kl ::= Exp_kl:exp1 PLUS:op Exp_kl:exp2{:
+                              try{
+							     RESULT = new OpExp(exp1left,exp1,OpExp.PLUS,exp2);
+							  }catch(Exception e){
+								Overall.myerror.error(exp1left,"OpExp_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+       |Exp_kl:exp1 MINUS:op Exp_kl:exp2{:
+                              try{
+							     RESULT = new OpExp(exp1left,exp1,OpExp.MINUS,exp2);
+							  }catch(Exception e){
+								 Overall.myerror.error(exp1left,"OpExp_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+	   |Exp_kl:exp1 MULT:op Exp_kl:exp2{:
+                              try{
+							     RESULT = new OpExp(exp1left,exp1,OpExp.MUL,exp2);
+							  }catch(Exception e){
+								 Overall.myerror.error(exp1left,"OpExp_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+	   |Exp_kl:exp1 SLASH:op Exp_kl:exp2{:
+							     RESULT = new OpExp(exp1left,exp1,OpExp.DIV,exp2);
+						 :}
+	   |Exp_kl:exp1 EQ:op Exp_kl:exp2{:
+                              try{
+							     RESULT = new OpExp(exp1left,exp1,OpExp.EQ,exp2);
+							  }catch(Exception e){
+								 Overall.myerror.error(exp1left,"OpExp_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+	   |Exp_kl:exp1 NOTEQ:op Exp_kl:exp2{:
+                              try{
+							     RESULT = new OpExp(exp1left,exp1,OpExp.NE,exp2);
+							  }catch(Exception e){
+								 Overall.myerror.error(exp1left,"OpExp_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+	   |Exp_kl:exp1 GT:op Exp_kl:exp2{:
+                              try{
+							     RESULT = new OpExp(exp1left,exp1,OpExp.GT,exp2);
+							  }catch(Exception e){
+								 Overall.myerror.error(exp1left,"OpExp_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+	   |Exp_kl:exp1 LT:op Exp_kl:exp2{:
+                              try{
+							     RESULT = new OpExp(exp1left,exp1,OpExp.LT,exp2);
+							  }catch(Exception e){
+								 Overall.myerror.error(exp1left,"OpExp_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+	   |Exp_kl:exp1 GE:op Exp_kl:exp2{:
+                              try{
+							     RESULT = new OpExp(exp1left,exp1,OpExp.GE,exp2);
+							  }catch(Exception e){
+								 Overall.myerror.error(exp1left,"OpExp_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+	   |Exp_kl:exp1 LE:op Exp_kl:exp2{:
+                              try{
+							     RESULT = new OpExp(exp1left,exp1,OpExp.LE,exp2);
+							  }catch(Exception e){
+								 Overall.myerror.error(exp1left,"OpExp_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+	   
+	   
+	   
+BreakExp_kl ::= BREAK:brea{:
+                              try{
+							     RESULT = new BreakExp(brealeft);
+							  }catch(Exception e){
+								 Overall.myerror.error(brealeft,"BreakExp_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+LetExp_kl ::= LET:let DecList_kl:declist IN ExpSeqOpt_kl:expseq END{:
+                              try{
+							     SeqExp seqexp = new SeqExp(expseqleft,expseq);
+							     RESULT = new LetExp(letleft,declist,seqexp);
+							  }catch(Exception e){
+								Overall.myerror.error(letleft,"LetExp_kl");
+								 e.printStackTrace();
+							  }
+						 :} ;
+
+WhileExp_kl ::= WHILE:whil Exp_kl:exp1 DO Exp_kl:exp2{:
+                              try{
+							     RESULT = new WhileExp(whilleft,exp1,exp2);
+							  }catch(Exception e){
+								 Overall.myerror.error(whilleft,"WhileExp_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+ForExp_kl ::= FOR:fo  ID:id ASSIGN Exp_kl:exp TO Exp_kl:exp1 DO Exp_kl:exp2{:
+                              try{
+							    VarDec forvar = new VarDec(idleft,Symbol.symbol(id),null,exp);
+							     RESULT = new ForExp(foleft,forvar,exp1,exp2);
+							  }catch(Exception e){
+								 Overall.myerror.error(foleft,"ForExp_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+
+IfExp_kl ::= IF:i Exp_kl:exp1 THEN Exp_kl:exp2{:
+                              try{
+							     RESULT = new IfExp(ileft,exp1,exp2);
+							  }catch(Exception e){
+								 Overall.myerror.error(ileft,"IfExp_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+			    |IF:i Exp_kl:exp1 THEN Exp_kl:exp2 ELSE Exp_kl:exp3{:
+                              try{
+							     RESULT = new IfExp(ileft,exp1,exp2,exp3);
+							  }catch(Exception e){
+								 Overall.myerror.error(ileft,"IfExpElse_kl");
+								 e.printStackTrace();
+							  }
+						 :}	   
+				|Exp_kl:exp1 AND:op Exp_kl:exp2{:
+                              try{
+							     RESULT = new IfExp(exp1left,exp1,exp2,new IntExp(exp2right,0));
+							  }catch(Exception e){
+								 Overall.myerror.error(exp1left,"OpExp_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+	            |Exp_kl:exp1 OR:op Exp_kl:exp2{:
+                              try{
+							     RESULT = new IfExp(exp1left,exp1,new IntExp(exp2left,1),exp2);
+							  }catch(Exception e){
+								 Overall.myerror.error(exp1left,"OpExp_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+ArrayExp_kl ::= ID:id LBRACKET Exp_kl:exp1 RBRACKET OF Exp_kl:exp2{:
+                              try{
+							     RESULT = new ArrayExp(idleft,Symbol.symbol(id),exp1,exp2);
+							  }catch(Exception e){
+						         Overall.myerror.error(idleft,"ArrayExp_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+SeqExp_kl ::= LPAREN:lparen ExpSeqOpt_kl:expseq RPAREN{:
+                              try{
+							     RESULT = new SeqExp(lparenleft,expseq);
+							  }catch(Exception e){
+								 Overall.myerror.error(lparenleft,"SeqExp_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+CallExp_kl ::= ID:id LPAREN ExpListOpt_kl:expseq RPAREN{:
+                              try{
+							     RESULT = new CallExp(idleft,Symbol.symbol(id),expseq);
+							  }catch(Exception e){
+								 Overall.myerror.error(idleft,"CallExp_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+RecordExp_kl ::= ID:id LBRACE FieldExpListOpt_kl:field RBRACE{:
+                              try{
+							     RESULT = new RecordExp(idleft,Symbol.symbol(id),field);
+							  }catch(Exception e){
+								 Overall.myerror.error(idleft,"RecordExp_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+AssignExp_kl ::= Lvalue_kl:var ASSIGN Exp_kl:exp{:
+                              try{
+							     RESULT = new AssignExp(varleft,var,exp);
+							  }catch(Exception e){
+								 Overall.myerror.error(varleft,"AssignExp_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+          
+		  		  
+DecList_kl ::= Dec_kl:dec DecList_kl:declist{:
+                              try{
+							     RESULT = new DecList(dec,declist);
+							  }catch(Exception e){
+								 Overall.myerror.error(decleft,"DecList_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+            |;
+
+
+Dec_kl ::= TypeDecList_kl:dec{:RESULT = dec;:}
+        |VarDec_kl:dec{:RESULT = dec;:}
+        |FunctionDecList_kl:dec{:RESULT = dec;:};
+        
+		
+		
+FunctionDecList_kl ::= FunctionDec_kl:functiondec FunctionDecList_kl:functiondeclist{:
+                              try{
+							   RESULT = new FunctionDec(functiondecleft,functiondec.name,functiondec.params,functiondec.result,                                         functiondec.body,functiondeclist);
+							  }catch(Exception e){
+								 Overall.myerror.error(functiondecleft,"FunctionDecList_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+                      |FunctionDec_kl:functiondec{:
+                              try{
+							    RESULT = functiondec;
+							  }catch(Exception e){
+								 Overall.myerror.error(functiondecleft,"FunctionDecList_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+		
+FunctionDec_kl ::= FUNC ID:id LPAREN FieldListOpt_kl:field RPAREN TypeOpt_kl:typeopt EQ Exp_kl:exp{:
+                              try{
+							    RESULT = new FunctionDec(idleft,Symbol.symbol(id),field,typeopt,exp,null);
+							  }catch(Exception e){
+								 Overall.myerror.error(idleft,"FunctionDec_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+VarDec_kl ::= VAR:var ID:id TypeOpt_kl:typeopt ASSIGN Exp_kl:exp{:
+                              try{
+							    RESULT = new VarDec(varleft,Symbol.symbol(id),typeopt,exp);
+							  }catch(Exception e){
+								 Overall.myerror.error(varleft,"VarDec_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+TypeDecList_kl ::= TypeDec_kl:typedec TypeDecList_kl:typedeclist{:
+                              try{
+							     RESULT = new TypeDec(typedecleft,typedec.name,typedec.ty,typedeclist);
+							  }catch(Exception e){
+								 Overall.myerror.error(typedecleft,"TypeDecList_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+				   |TypeDec_kl:typedec{:
+                              try{
+							     RESULT = typedec;
+							  }catch(Exception e){
+								 Overall.myerror.error(typedecleft,"TypeDecList_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+TypeDec_kl ::= TYPE:t ID:id EQ Type_kl:type{:
+                              try{
+							     RESULT = new TypeDec(tleft,Symbol.symbol(id),type,null);
+							  }catch(Exception e){
+								 Overall.myerror.error(tleft,"TypeDec_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+
+Type_kl ::= NameTy_kl:ty{:RESULT = ty;:}
+        |RecordTy_kl:ty{:RESULT = ty;:}                
+        |ArrayTy_kl:ty{:RESULT = ty;:};
+        
+		
+NameTy_kl ::= ID:id{:
+                              try{
+							     RESULT = new NameTy(idleft,Symbol.symbol(id));
+							  }catch(Exception e){
+								 Overall.myerror.error(idleft,"NameTy_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+RecordTy_kl ::= LBRACE:lbrace FieldListOpt_kl:field RBRACE{:
+                              try{
+							     RESULT = new RecordTy(lbraceleft,field);
+							  }catch(Exception e){
+								 Overall.myerror.error(lbraceleft,"RecordTy_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+ArrayTy_kl ::= ARRAY:array OF ID:id{:
+                              try{
+							     RESULT = new ArrayTy(arrayleft,Symbol.symbol(id));
+							  }catch(Exception e){
+								 Overall.myerror.error(arrayleft,"ArrayTy_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+						 
+						 
+ExpListOpt_kl ::= ExpList_kl:explist{:
+                              try{
+							     RESULT = explist;
+							  }catch(Exception e){
+								 Overall.myerror.error(explistleft,"ExpListOpt_kl");
+								 e.printStackTrace();
+							  }
+							 :}
+                             |; 
+                                       					 
+						 
+ExpList_kl ::=  Exp_kl:exp COMMA ExpList_kl:explist{:
+                              try{
+							     RESULT = new ExpList(exp,explist);
+							  }catch(Exception e){
+								 Overall.myerror.error(expleft,"ExpList_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+               |Exp_kl:exp{:
+                              try{
+							     RESULT = new ExpList(exp,null);
+							  }catch(Exception e){
+								 Overall.myerror.error(expleft,"ExpList_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+					 
+ExpSeqOpt_kl ::= ExpSeq_kl:expseq{:
+                                   RESULT = expseq;
+					        :}
+                             |;
+							 
+ExpSeq_kl ::= Exp_kl:exp SEMICOLON ExpSeq_kl:expseq  {:
+                              try{
+							     RESULT = new ExpList(exp,expseq);
+							  }catch(Exception e){
+								 Overall.myerror.error(expleft,"ExpSeq_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+               |Exp_kl:exp{:
+                              try{
+							     RESULT = new ExpList(exp,null);
+							  }catch(Exception e){
+								 Overall.myerror.error(expleft,"ExpSeq_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+	
+
+FieldListOpt_kl ::= FieldList_kl:field{:
+                                        RESULT = field;                           
+							  :}
+                              |;	
+	
+FieldList_kl ::=ID:id1 COLON ID:id2 COMMA FieldList_kl:f   {:
+                              try{
+							     RESULT = new FieldList(id1left,Symbol.symbol(id1),Symbol.symbol(id2),f);
+							  }catch(Exception e){
+								 Overall.myerror.error(id1left,"FieldList_kl");
+								 e.printStackTrace();
+							  }
+						 :}              
+                 |ID:id1 COLON ID:id2{:
+                              try{
+							     RESULT = new FieldList(id1left,Symbol.symbol(id1),Symbol.symbol(id2),null);
+							  }catch(Exception e){
+								 Overall.myerror.error(id1left,"FieldList_kl");
+								 e.printStackTrace();
+							  }
+						 :}               ;
+
+FieldExpListOpt_kl ::= FieldExpList_kl:field{:
+                                    RESULT = field;
+				                  :}
+								  |;
+				 
+FieldExpList_kl ::= ID:id EQ Exp_kl:exp COMMA FieldExpList_kl:f {:
+                              try{
+							     RESULT = new FieldExpList(idleft,Symbol.symbol(id),exp,f);
+							  }catch(Exception e){
+								 Overall.myerror.error(fleft,"FieldExpList_kl");
+                                 e.printStackTrace();
+							  }
+						 :}
+                         |ID:id EQ Exp_kl:exp {:
+                              try{
+							     RESULT = new FieldExpList(idleft,Symbol.symbol(id),exp,null);
+							  }catch(Exception e){
+								 Overall.myerror.error(idleft,"FieldExpList_kl");
+                                 e.printStackTrace();
+							  }
+						 :};
+
+
+						 					 
+TypeOpt_kl ::= COLON ID:id{:
+                              try{
+							     RESULT = new NameTy(idleft,Symbol.symbol(id));
+							  }catch(Exception e){
+								 Overall.myerror.error(idleft,"TypeOpt_kl");
+								 e.printStackTrace();
+							  }
+						 :}
+                 |;
+
+
+				 
+				 
+Lvalue_kl ::= SimpleVar_kl:var{:RESULT = var;:} 
+          |FieldVar_kl:var{:RESULT = var;:}
+          |SubscriptVar:var{:RESULT = var;:}
+		  |SubscriptVar2:var{:RESULT = var;:};
+
+
+SimpleVar_kl ::= ID:id{:
+                              try{
+							     RESULT = new SimpleVar(idleft,Symbol.symbol(id));
+							  }catch(Exception e){
+								 Overall.myerror.error(idleft,"SimpleVar_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+FieldVar_kl ::= Lvalue_kl:var PERIOD ID:id{:
+                              try{
+							     RESULT = new FieldVar(varleft,var,Symbol.symbol(id));
+							  }catch(Exception e){
+								 Overall.myerror.error(varleft,"FieldVar_kl");
+								 e.printStackTrace();
+							  }
+						 :};
+
+SubscriptVar ::= Lvalue_kl:var LBRACKET Exp_kl:exp RBRACKET{:
+                              try{
+							     RESULT = new SubscriptVar(varleft,var,exp);
+							  }catch(Exception e){
+								 Overall.myerror.error(varleft,"SubscriptVar");
+								 e.printStackTrace();
+							  }
+						 :};
+
+SubscriptVar2 ::= ID:id LBRACKET Exp_kl:exp RBRACKET{:
+                              try{
+							     SimpleVar var = new SimpleVar(idleft,Symbol.symbol(id)); 
+							     RESULT = new SubscriptVar(idleft,var,exp);
+							  }catch(Exception e){
+								 Overall.myerror.error(idleft,"SubscriptVar2");
+								 e.printStackTrace();
+							  }
+						 :};

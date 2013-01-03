@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/minimizetotray/!svn/ver/33/trunk/chrome/locale/sk-SK
+END
+common.dtd
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/minimizetotray/!svn/ver/18/trunk/chrome/locale/sk-SK/common.dtd
+END
+common.properties
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/minimizetotray/!svn/ver/33/trunk/chrome/locale/sk-SK/common.properties
+END
+prefs-window.dtd
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/minimizetotray/!svn/ver/33/trunk/chrome/locale/sk-SK/prefs-window.dtd
+END

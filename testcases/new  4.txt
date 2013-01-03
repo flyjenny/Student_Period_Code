@@ -1,0 +1,54 @@
+select avg(speed) from laptop where price > 1000
+
+SelectColumnList(
+  SelectColumn(
+    null
+    AlgebraOp(
+      null
+      null
+      AggregateExp(
+        15
+        Column(
+          null
+          speed
+        ) [Column]
+      ) [AggregateExp]
+    ) [AlgebraOp]
+  ) [SelectColumn]
+  null
+) [SelectColumnList]
+****************************
+FromTableList(
+  FromTable(
+    laptop
+    null
+    null
+  ) [FromTable]
+  null
+) [FromTableList]
+****************************
+WhereExp(
+  CmpExp(
+    false
+    22
+    CmpOp(
+      28
+      Column(
+        null
+        price
+      ) [Column]
+      null
+      null
+    ) [CmpOp]
+    CmpOp(
+      28
+      null
+      null
+      IntExp(
+        1000
+      ) [IntExp]
+    ) [CmpOp]
+  ) [CmpExp]
+  null
+  null
+) [WhereExp]

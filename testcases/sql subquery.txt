@@ -1,0 +1,35 @@
+sql 子查询
+语法
+
+            可用三种语法来创建子查询： 
+
+comparison [ANY | ALL | SOME] (sqlstatement)
+expression [NOT] IN (sqlstatement)
+[NOT] EXISTS (sqlstatement)
+
+     
+    说明
+    可以拿子查询代替表达式 用于SELECT 语句字段表或 WHERE 或 HAVING 子句。在子查询之中，在 WHERE 或 HAVING 子句的表达式中，用于计算的特定值是由 SELECT 语句提供的。
+    使用 ANY 或 SOME 谓词，它们是同义字，来检索主查询中的记录，这些记录要满足在子查询中检索的任何记录的比较条件。下列示例将返回全部单价比任何以 25% 或更高的折扣卖出的产品高的产品：
+    SELECT * FROM Products
+    WHERE UnitPrice > ANY
+    (SELECT UnitPrice FROM OrderDetails
+    WHERE Discount >= .25);
+     
+    使用 ALL 谓词只检索主查询中的这些记录，它们满足在子查询中检索的所有记录的比较条件。如果将前一个示例中的 ANY 改为 ALL，查询只会返回单价比全部以 25% 或更高的折扣卖出的产品高的产品。这是更多的限制。
+    用 IN 谓词，只能在主查询检索那些记录，在子查询中的某些记录也包含和它们相同的值。下列示例返回有 25% 或更高的折扣的所有产品：
+    SELECT * FROM Products
+    WHERE ProductID IN
+    (SELECT ProductID FROM OrderDetails
+    WHERE Discount >= .25);
+     
+    相反，可用 NOT IN 在主查询中检索那样的记录，在子查询中没有包含与它们的值相同的记录。
+    在 true/false 比较中使用 EXISTS 谓词（与可选的 NOT 保留字一道）来决定子查询是否会返回任何记录。
+    还可用子查询中的表名别名来查询子查询外的 FROM 子句的列表。下列示例返回工资等于或高于所有职位相同员工的平均工资的员工姓名。这张员工表的别名为 "T1"：
+    SELECT LastName,
+    FirstName, Title, Salary
+    FROM Employees AS T1
+    WHERE Salary >=
+    (SELECT Avg(Salary)
+    FROM Employees
+    WHERE T1.Title = Employees.Title) Order by Title; 

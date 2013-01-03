@@ -1,0 +1,6 @@
+for i:=1 to 2 do 
+	let 
+		type a = array of int
+var b := a [10] of i 
+	in 
+	end

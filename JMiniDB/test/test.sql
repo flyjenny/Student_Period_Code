@@ -1,0 +1,1 @@
+create table ab (cd int,ef char(20))

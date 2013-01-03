@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/103/trunk/JMiniDB/src/test/planner
+END
+TestPlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/103/trunk/JMiniDB/src/test/planner/TestPlanner.java
+END
+TestSubQueryPlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/103/trunk/JMiniDB/src/test/planner/TestSubQueryPlanner.java
+END
+TestProductPlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/103/trunk/JMiniDB/src/test/planner/TestProductPlanner.java
+END
+TestPriKeyPlanner1.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/103/trunk/JMiniDB/src/test/planner/TestPriKeyPlanner1.java
+END
+TestPriKeyPlanner2.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/103/trunk/JMiniDB/src/test/planner/TestPriKeyPlanner2.java
+END
+TestGroupByPlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/103/trunk/JMiniDB/src/test/planner/TestGroupByPlanner.java
+END
+TestTablePlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/103/trunk/JMiniDB/src/test/planner/TestTablePlanner.java
+END
+TestExtendPlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/103/trunk/JMiniDB/src/test/planner/TestExtendPlanner.java
+END
+TestSimplePlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/103/trunk/JMiniDB/src/test/planner/TestSimplePlanner.java
+END
+TestForgnKeyPlanner1.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/89/trunk/JMiniDB/src/test/planner/TestForgnKeyPlanner1.java
+END
+TestForgnKeyPlanner2.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/103/trunk/JMiniDB/src/test/planner/TestForgnKeyPlanner2.java
+END
+TestIndexPlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/100/trunk/JMiniDB/src/test/planner/TestIndexPlanner.java
+END
+TestViewPlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/103/trunk/JMiniDB/src/test/planner/TestViewPlanner.java
+END
+TestOrderPlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/103/trunk/JMiniDB/src/test/planner/TestOrderPlanner.java
+END
+TestCheckPlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/98/trunk/JMiniDB/src/test/planner/TestCheckPlanner.java
+END

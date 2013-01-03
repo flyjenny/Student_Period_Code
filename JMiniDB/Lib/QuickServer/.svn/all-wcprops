@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/3/trunk/JMiniDB/Lib/QuickServer
+END
+commons-collections.jar
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/3/trunk/JMiniDB/Lib/QuickServer/commons-collections.jar
+END
+quickserver_config.dtd
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/3/trunk/JMiniDB/Lib/QuickServer/quickserver_config.dtd
+END
+quickserver_config.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/3/trunk/JMiniDB/Lib/QuickServer/quickserver_config.xsd
+END
+commons-logging.jar
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/3/trunk/JMiniDB/Lib/QuickServer/commons-logging.jar
+END
+commons-digester.jar
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/3/trunk/JMiniDB/Lib/QuickServer/commons-digester.jar
+END
+commons-beanutils.jar
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/3/trunk/JMiniDB/Lib/QuickServer/commons-beanutils.jar
+END
+QSAdminGUI.jar
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/3/trunk/JMiniDB/Lib/QuickServer/QSAdminGUI.jar
+END
+commons-pool.jar
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/3/trunk/JMiniDB/Lib/QuickServer/commons-pool.jar
+END
+QuickServer.jar
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/3/trunk/JMiniDB/Lib/QuickServer/QuickServer.jar
+END
+metouia.jar
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/3/trunk/JMiniDB/Lib/QuickServer/metouia.jar
+END

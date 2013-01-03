@@ -1,0 +1,73 @@
+10
+
+dir
+104
+http://jminidb.googlecode.com/svn/trunk/JMiniDB/src
+http://jminidb.googlecode.com/svn
+
+
+
+2009-09-10T09:46:39.219097Z
+104
+theFm.cn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+520daef4-44e7-11de-b695-a305669b6508
+
+test
+dir
+
+metadata
+dir
+
+java_cup
+dir
+
+common
+dir
+
+tx
+dir
+
+exception
+dir
+
+planner
+dir
+
+query
+dir
+
+io
+dir
+
+index
+dir
+
+buffer
+dir
+
+parse
+dir
+
+jminidb
+dir
+
+absyn
+dir
+
+record
+dir
+

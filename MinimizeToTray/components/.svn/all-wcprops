@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/minimizetotray/!svn/ver/59/trunk/components
+END
+loader.js
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/minimizetotray/!svn/ver/31/trunk/components/loader.js
+END
+trayCommandLine.js
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/minimizetotray/!svn/ver/59/trunk/components/trayCommandLine.js
+END
+components.manifest
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/minimizetotray/!svn/ver/57/trunk/components/components.manifest
+END

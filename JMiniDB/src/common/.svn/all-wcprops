@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/103/trunk/JMiniDB/src/common
+END
+JResultSet.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/89/trunk/JMiniDB/src/common/JResultSet.java
+END
+Types.java
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/26/trunk/JMiniDB/src/common/Types.java
+END
+JEffectResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/86/trunk/JMiniDB/src/common/JEffectResult.java
+END
+Compare.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/86/trunk/JMiniDB/src/common/Compare.java
+END
+JExceptionResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/86/trunk/JMiniDB/src/common/JExceptionResult.java
+END
+JResultSetFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/103/trunk/JMiniDB/src/common/JResultSetFactory.java
+END
+JQueryResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/86/trunk/JMiniDB/src/common/JQueryResult.java
+END

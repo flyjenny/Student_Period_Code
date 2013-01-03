@@ -1,0 +1,1 @@
+select ab.cd from ab where ab.cd > 0

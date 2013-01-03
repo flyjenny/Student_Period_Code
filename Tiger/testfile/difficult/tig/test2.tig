@@ -1,0 +1,85 @@
+/* recursive dec */
+
+let
+	type a = b
+	type b = int
+	
+	var a := "=========== 我是华丽的分割符 ================="
+	
+	type int = int			/* recursive type dec */
+	
+	var a := "=========== 我是华丽的分割符 ================="
+	
+	type a = b			/* recursive type dec */
+	type b = a			/* recursive type dec */
+	
+	var a := "=========== 我是华丽的分割符 ================="
+
+	type a = b
+	type b = array of a
+	
+	var a := "=========== 我是华丽的分割符 ================="
+	
+	type a = b
+	type b = {a:a}
+	
+	var a := "=========== 我是华丽的分割符 ================="
+
+	type a = b			/* recursive type dec */
+	type c = b			/* recursive type dec */
+	type b = d			/* recursive type dec */
+	type d = a			/* recursive type dec */
+		
+	var a := "=========== 我是华丽的分割符 ================="
+
+	type a = b
+	type c = b
+	type b = d
+	type d = {a:c, b:a}
+	
+	var a := "=========== 我是华丽的分割符 ================="
+
+	type a = b
+	type b = c
+	type c = int
+	type int = string
+	type string = e			/* undefined type */
+	type c = string			/* multiple type dec */
+	
+	var a := "=========== 我是华丽的分割符 ================="
+
+	function a(a:int, b:int) = b()	/* undefined function call */
+	function b() = a(1,2)			/* unmatched arguments */
+
+	var a := "=========== 我是华丽的分割符 ================="
+
+	function a(aa:int, bb:int) = b()
+	function b() = a(1,2)			/* unmatched arguments */
+	
+	var a := "=========== 我是华丽的分割符 ================="
+
+	function a() = b()
+	function b() = c()
+	function c() = d()
+	function d() = a()	
+
+	var a := "=========== 我是华丽的分割符 ================="
+
+	function a():int = b()
+	function b():int = c()
+	function c():int = d()
+	function d():int = a()	
+
+	var a := "=========== 我是华丽的分割符 ================="
+
+	function a() = b()
+	function b() = c()
+	function c() = d()			/* Unmatched Return Type */
+	function d():int = a()		/* Unmatched Return Type */
+
+	var a := "=========== 我是华丽的分割符 ================="
+	
+	function a() = ()
+	function a() = ()			/* multiple function name */
+in
+end

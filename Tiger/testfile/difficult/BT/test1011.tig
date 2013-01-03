@@ -1,0 +1,5 @@
+let 
+type a = {}
+var a:a = if 1 then nil else nil
+in
+end

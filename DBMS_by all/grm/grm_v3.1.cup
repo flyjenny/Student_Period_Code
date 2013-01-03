@@ -1,0 +1,323 @@
+package QueryManager.Parser;
+
+import QueryManager.Lexer.*;
+import Absyn.*;
+
+parser code {: 
+	public Absyn parseResult;
+	Lexer lexer;
+
+	public Grm(Lexer l) {
+		this();
+		lexer = l;
+	}
+	
+	public Absyn getResult() throws Exception {
+		Absyn result = null;
+		try {
+			result = (Absyn) parse().value;
+		} catch (Exception e) {
+			throw new Exception("Syntax error");
+		}
+		return result;
+	}
+:};
+
+scan with {: return lexer.nextToken(); :};
+
+terminal String ID, STRINGVALUE, INTVALUE, REALVALUE;
+terminal ADD, ALL, ALTERCOLUMN, ALTERTABLE, AND, ANY, AS, ASC, AVG, BOOL, CHAR, CREATEINDEX,
+		 CREATETABLE, CREATEVIEW, COUNT, DECIMAL, DEFAULT, DELETE, DESC, DISTINCT, DOUBLE,
+		 DROPCOLUMN,DROPINDEX, DROPTABLE, DROPVIEW, FALSE, FLOAT, FROM, GROUPBY, HAVING, IN,
+		 INSERTINTO, INT, LIKE, MAX, MIN, NOT, NOTNULL, NULL, ON, OR, ORDERBY, PRIMARYKEY,
+		 SELECT, SET, SUM, TRUE, UNION, UNIQUE, UPDATE, VALUES, VARCHAR, WHERE;
+terminal PLUS, MINUS, STAR, DIVIDE;
+terminal GT, LT, EQ, GE, LE, NEQ;
+terminal LPAREN, RPAREN, DOT, COMMA;
+terminal CHECK, FOREIGNKEY, REFERENCES;
+
+non terminal program;
+non terminal AggregateExp		aggregate_exp;
+non terminal AlgebraBinExp		algebra_bin_exp;
+non terminal AlgebraExp			algebra_exp;
+non terminal AlgebraOp			algebra_op;
+non terminal AlterExp			alter_exp;
+non terminal CmpExp				cmp_exp;
+non terminal CmpOp				cmp_op;
+non terminal ColumnCons			column_cons;
+non terminal ColumnDef			column_def;
+non terminal ColumnDefList		column_def_list;
+non terminal ColumnList			column_list;
+non terminal Column				column;
+non terminal CreateExp			create_exp;
+non terminal CreateIndexExp		create_index_exp;
+non terminal CreateTableExp		create_table_exp;
+non terminal CreateViewExp		create_view_exp;
+non terminal DataType			data_type;
+non terminal DeleteExp			delete_exp;
+non terminal DropExp			drop_exp;
+non terminal FromTable			from_table;
+non terminal FromTableList		from_table_list;
+non terminal GroupExp			group_exp;
+non terminal HavingCondExp		having_cond_exp;
+non terminal HavingCondBinExp	having_cond_bin_exp;
+non terminal HavingExp			having_exp;
+non terminal HavingCondOp		having_cond_op;
+non terminal IdList				id_list;
+non terminal InExp				in_exp;
+non terminal InsertExp			insert_exp;
+non terminal LikeExp			like_exp;
+non terminal OrderColumn		order_column;
+non terminal OrderColumnList	order_column_list;
+non terminal OrderExp			order_exp;
+non terminal SelectColumn		select_column;
+non terminal SelectColumnList	select_column_list;
+non terminal SelectBinExp		select_bin_exp;
+non terminal SelectExp			select_exp;
+non terminal SelectOp			select_op;
+non terminal SqlExp				sql_exp;
+non terminal SqlExpList			sql_exp_list;
+non terminal UpdateColumn		update_column;
+non terminal UpdateColumnList	update_column_list;
+non terminal UpdateExp			update_exp;
+non terminal ValueExp			value_exp;
+non terminal ValueExpList		value_exp_list;
+non terminal WhereCondBinExp	where_cond_bin_exp;
+non terminal WhereCondExp		where_cond_exp;
+non terminal WhereCondOp		where_cond_op;
+non terminal WhereExp			where_exp;
+
+precedence nonassoc AS, COMMA;
+precedence left WHERE, UNION;
+precedence left ORDERBY, GROUPBY;
+precedence left OR;
+precedence left AND;
+precedence nonassoc EQ, NEQ, GT, GE, LT, LE;
+precedence left PLUS, MINUS;
+precedence left STAR, DIVIDE;
+precedence left LPAREN;
+
+start with program;
+
+program ::= sql_exp_list:s {: RESULT = s; :}
+;
+sql_exp_list ::= sql_exp:s {: RESULT = new SqlExpList(sleft, s, null); :}
+			   | sql_exp:h sql_exp_list:t {: RESULT = new SqlExpList(hleft, h, t); :}
+;
+sql_exp ::= create_exp:e {: RESULT = e; :}
+		  | select_exp:e {: RESULT = e; :}
+		  | insert_exp:e {: RESULT = e; :}
+		  | delete_exp:e {: RESULT = e; :}
+		  | update_exp:e {: RESULT = e; :}
+		  | drop_exp:e {: RESULT = e; :}
+		  | alter_exp:e {: RESULT = e; :}
+;
+/* create expression */
+create_exp ::= create_table_exp:e {: RESULT = e; :}
+			 | create_view_exp:e {: RESULT = e; :}
+			 | create_index_exp:e {: RESULT = e; :}
+;
+create_table_exp ::= CREATETABLE:c ID:n LPAREN column_def_list:l RPAREN
+					 {: RESULT = new CreateTableExp(cleft, n, l); :}
+;
+create_view_exp ::= CREATEVIEW:c ID:n AS select_exp:s
+					{: RESULT = new CreateViewExp(cleft, n, s); :}
+;
+create_index_exp ::= CREATEINDEX:c ID:in ON ID:tn LPAREN id_list:l RPAREN
+					 {: RESULT = new CreateIndexExp(cleft, in, tn, l); :}
+;
+column_def_list ::= column_def:c {: RESULT = new ColumnDefList(cleft, c, null); :}
+				  | column_def:h COMMA column_def_list:t {: RESULT = new ColumnDefList(hleft, h, t); :}
+;
+column_def ::= ID:n data_type:t {: RESULT = new ColumnDef(nleft, n, t, null); :}
+			 | ID:n data_type:t column_cons:c {: RESULT = new ColumnDef(nleft, n, t, c); :}
+;
+column_cons ::= PRIMARYKEY:s {: RESULT = new ColumnCons(sleft, Const.PRIMARYKEY, null); :}
+			  | UNIQUE:s {: RESULT = new ColumnCons(sleft, Const.UNIQUE, null); :}
+			  | NOTNULL:s {: RESULT = new ColumnCons(sleft, Const.NOTNULL, null); :}
+			  | NOTNULL:s DEFAULT value_exp:v {: RESULT = new ColumnCons(sleft, Const.NOTNULL, v); :}
+			  | DEFAULT:s value_exp:v {: RESULT = new ColumnCons(sleft, Const.NOCONS, v); :}
+;
+id_list ::= ID:n {: RESULT = new IdList(nleft, n, null); :}
+		  | ID:n COMMA id_list:l {: RESULT = new IdList(nleft, n, l); :}
+;
+value_exp ::= INTVALUE:e {: RESULT = new IntExp(eleft, e); :}
+			| REALVALUE:e {: RESULT = new RealExp(eleft, e); :}
+			| STRINGVALUE:e {: RESULT = new StrExp(eleft, e); :}
+			| TRUE:e {: RESULT = new BoolExp(eleft, "true"); :}
+			| FALSE:e {: RESULT = new BoolExp(eleft, "false"); :}
+			| NULL:e {: RESULT = new NullExp(eleft); :}
+;
+data_type ::= INT:t {: RESULT = new DataType(tleft, "" + Const.INT, "0", "0", "0"); :}
+			| FLOAT:t {: RESULT = new DataType(tleft, "" + Const.FLOAT, "0", "0", "0"); :}
+			| DOUBLE:t {: RESULT = new DataType(tleft, "" + Const.DOUBLE, "0", "0", "0"); :}
+			| DECIMAL:t LPAREN INTVALUE:p RPAREN {: RESULT = new DataType(tleft, "" + Const.DECIMAL, "0", "" + p, "0"); :}
+			| DECIMAL:t LPAREN INTVALUE:p COMMA INTVALUE:s RPAREN {: RESULT = new DataType(tleft, "" + Const.DECIMAL, "0", "" + p, "" + s); :}
+			| CHAR:t LPAREN INTVALUE:s RPAREN {: RESULT = new DataType(tleft, "" + Const.CHAR, "" + s, "0", "0"); :}
+			| CHAR:t {: RESULT = new DataType(tleft, "" + Const.CHAR, "1", "0", "0"); :}
+			| VARCHAR:t LPAREN INTVALUE:s RPAREN {: RESULT = new DataType(tleft, "" + Const.VARCHAR, "" + s, "0", "0"); :}
+			| BOOL:t {: RESULT = new DataType(tleft, "" + Const.BOOL, "0", "0", "0"); :}
+;
+/* select expression */
+select_exp ::= select_op:s {: RESULT = s; :}
+			 | select_bin_exp:s {: RESULT = s; :}
+			 | LPAREN:l select_exp:s RPAREN {: s.pos = lleft; RESULT = s; :}
+;
+select_op ::= SELECT:s STAR FROM from_table_list:t where_exp:w
+			  {: RESULT = new SelectOp(sleft, false, true, null, t, w); :}
+			| SELECT:s DISTINCT STAR FROM from_table_list:t where_exp:w 
+			  {: RESULT = new SelectOp(sleft, true, true, null, t, w); :}
+			| SELECT:s select_column_list:c FROM from_table_list:t where_exp:w
+			  {: RESULT = new SelectOp(sleft, false, false, c, t, w); :}
+			| SELECT:s DISTINCT select_column_list:c FROM from_table_list:t where_exp:w
+			  {: RESULT = new SelectOp(sleft, true, false, c, t, w); :}
+;
+select_bin_exp ::= select_exp:l UNION select_exp:r {: RESULT = new SelectBinExp(lleft, false, l, r); :}
+				 | select_exp:l UNION ALL select_exp:r {: RESULT = new SelectBinExp(lleft, true, l, r); :}
+;
+select_column_list ::= select_column:c {: RESULT = new SelectColumnList(cleft, c, null); :}
+					 | select_column:h COMMA select_column_list:t {: RESULT = new SelectColumnList(hleft, h, t); :}
+;
+select_column ::= algebra_exp:e {: RESULT = new SelectColumn(eleft, null, e); :}
+				| algebra_exp:e AS ID:n {: RESULT = new SelectColumn(eleft, n, e); :}
+;
+algebra_exp ::= algebra_op:e {: RESULT = e; :}
+			  | algebra_bin_exp:e {: RESULT = e; :}
+			  | LPAREN:l algebra_exp:e RPAREN {: e.pos = lleft; RESULT = e; :}
+;
+algebra_op ::= column:c {: RESULT = new AlgebraOp(cleft, c, null, null); :}
+			 | value_exp:v {: RESULT = new AlgebraOp(vleft, null, v, null); :}
+			 | aggregate_exp:a {: RESULT = new AlgebraOp(aleft, null, null, a); :}
+;
+algebra_bin_exp ::= algebra_exp:l PLUS algebra_exp:r {: RESULT = new AlgebraBinExp(lleft, Const.PLUS, l, r); :}
+				  | algebra_exp:l MINUS algebra_exp:r {: RESULT = new AlgebraBinExp(lleft, Const.MINUS, l, r); :}
+				  | algebra_exp:l STAR algebra_exp:r {: RESULT = new AlgebraBinExp(lleft, Const.STAR, l, r); :}
+				  | algebra_exp:l DIVIDE algebra_exp:r {: RESULT = new AlgebraBinExp(lleft, Const.DIVIDE, l, r); :}
+;
+aggregate_exp ::= AVG:e LPAREN column:c RPAREN {: RESULT = new AggregateExp(eleft, Const.AVG, c); :}
+			 	| MAX:e LPAREN column:c RPAREN {: RESULT = new AggregateExp(eleft, Const.MAX, c); :}
+				| MIN:e LPAREN column:c RPAREN {: RESULT = new AggregateExp(eleft, Const.MIN, c); :}
+				| SUM:e LPAREN column:c RPAREN {: RESULT = new AggregateExp(eleft, Const.SUM, c); :}
+				| COUNT:e LPAREN column:c RPAREN {: RESULT = new AggregateExp(eleft, Const.COUNT, c); :}
+;
+column ::= ID:n {: RESULT = new Column(nleft, null, n); :}
+		 | ID:tn DOT ID:cn {: RESULT = new Column(tnleft, tn, cn); :}
+;
+from_table_list ::= from_table:f {: RESULT = new FromTableList(fleft, f, null); :}
+				  | from_table:h COMMA from_table_list:t {: RESULT = new FromTableList(hleft, h, t); :}
+;
+from_table ::= ID:tn AS ID:nn {: RESULT = new FromTable(tnleft, tn, null, nn); :}
+			 | ID:tn {: RESULT = new FromTable(tnleft, tn, null, null); :}
+			 | select_exp:s AS ID:nn {: RESULT = new FromTable(sleft, null, s, nn); :}
+			 | select_exp:s {: RESULT = new FromTable(sleft, null, s, null); :}
+;
+where_exp ::=
+			| group_exp:g {: RESULT = new WhereExp(gleft, null, g, null); :}
+			| order_exp:o {: RESULT = new WhereExp(oleft, null, null, o); :}
+			| group_exp:g order_exp:o {: RESULT = new WhereExp(gleft, null, g, o); :}
+			| WHERE:w where_cond_exp:c {: RESULT = new WhereExp(wleft, c, null, null); :}
+			| WHERE:w where_cond_exp:c group_exp:g {: RESULT = new WhereExp(wleft, c, g, null); :}
+			| WHERE:w where_cond_exp:c order_exp:o {: RESULT = new WhereExp(wleft, c, null, o); :}
+			| WHERE:w where_cond_exp:c group_exp:g order_exp:o {: RESULT = new WhereExp(wleft, c, g, o); :}
+;
+where_cond_exp ::= where_cond_op:e {: RESULT = e; :}
+				 | where_cond_bin_exp:e {: RESULT = e; :}
+				 | NOT:n where_cond_exp:e {: e.pos = nleft; e.isNeg = true; RESULT = e; :}
+				 | LPAREN:l where_cond_exp:e RPAREN {: e.pos = lleft; RESULT = e; :}
+;
+where_cond_op ::= cmp_exp:e {: RESULT = e; :}
+				| like_exp:e {: RESULT = e; :}
+				| in_exp:e {: RESULT = e; :}
+;
+where_cond_bin_exp ::= where_cond_exp:l OR where_cond_exp:r {: RESULT = new WhereCondBinExp(lleft, false, l, r); :}
+					 | where_cond_exp:l AND where_cond_exp:r {: RESULT = new WhereCondBinExp(lleft, true, l, r); :}
+;
+cmp_exp ::= cmp_op:l EQ cmp_op:r {: RESULT = new CmpExp(lleft, Const.EQ, l, r); :}
+		  | cmp_op:l NEQ cmp_op:r {: RESULT = new CmpExp(lleft, Const.NEQ, l, r); :}
+		  | cmp_op:l GT cmp_op:r {: RESULT = new CmpExp(lleft, Const.GT, l, r); :}
+		  | cmp_op:l GE cmp_op:r {: RESULT = new CmpExp(lleft, Const.GE, l, r); :}
+		  | cmp_op:l LT cmp_op:r {: RESULT = new CmpExp(lleft, Const.LT, l, r); :}
+		  | cmp_op:l LE cmp_op:r {: RESULT = new CmpExp(lleft, Const.LE, l, r); :}
+;
+cmp_op ::= column:c {: RESULT = new CmpOp(cleft, Const.SOLO, c, null, null); :}
+		 | ANY:a column:c {: RESULT = new CmpOp(aleft, Const.ANY, c, null, null); :}
+		 | ALL:a column:c {: RESULT = new CmpOp(aleft, Const.ALL, c, null, null); :}
+		 | select_exp:s {: RESULT = new CmpOp(sleft, Const.SOLO, null, s, null); :}
+		 | ANY:a select_exp:s {: RESULT = new CmpOp(aleft, Const.ANY, null, s, null); :}
+		 | ALL:a select_exp:s {: RESULT = new CmpOp(aleft, Const.ALL, null, s, null); :}
+		 | value_exp:v {: RESULT = new CmpOp(vleft, Const.SOLO, null, null, v); :}
+;
+like_exp ::= column:c LIKE STRINGVALUE:s {: RESULT = new LikeExp(cleft, c, s); :}
+;
+in_exp ::= column:c IN select_exp:s {: RESULT = new InExp(cleft, true, c, s); :}
+		 | column:c NOT IN select_exp:s {: RESULT = new InExp(cleft, false, c, s); :}
+;
+group_exp ::= GROUPBY:g column_list:l having_exp:h {: RESULT = new GroupExp(gleft, l, h); :}
+			| GROUPBY:g column_list:l {: RESULT = new GroupExp(gleft, l, null); :}
+;
+column_list ::= column:c {: RESULT = new ColumnList(cleft, c, null); :}
+			  | column:h COMMA column_list:t {: RESULT = new ColumnList(hleft, h, t); :}
+;
+having_exp ::= HAVING:h having_cond_exp:e {: RESULT = new HavingExp(hleft, e); :}
+;
+having_cond_exp ::= having_cond_op:e {: RESULT = e; :}
+				  | having_cond_bin_exp:e {: RESULT = e; :}
+				  | NOT:n having_cond_exp:e {: e.pos = nleft; e.isNeg = true; RESULT = e; :}
+				  | LPAREN:l having_cond_exp:e RPAREN {: e.pos = lleft; RESULT = e; :}
+;
+having_cond_bin_exp ::= having_cond_exp:l OR having_cond_exp:r {: RESULT = new HavingCondBinExp(lleft, false, l, r); :}
+					  | having_cond_exp:l AND having_cond_exp:r {: RESULT = new HavingCondBinExp(lleft, true, l, r); :}
+;
+having_cond_op ::= aggregate_exp:a EQ value_exp:v {: RESULT = new HavingCondOp(aleft, Const.EQ, a, v); :}
+				 | aggregate_exp:a NEQ value_exp:v {: RESULT = new HavingCondOp(aleft, Const.NEQ, a, v); :}
+				 | aggregate_exp:a GT value_exp:v {: RESULT = new HavingCondOp(aleft, Const.GT, a, v); :}
+				 | aggregate_exp:a GE value_exp:v {: RESULT = new HavingCondOp(aleft, Const.GE, a, v); :}
+				 | aggregate_exp:a LT value_exp:v {: RESULT = new HavingCondOp(aleft, Const.LT, a, v); :}
+				 | aggregate_exp:a LE value_exp:v {: RESULT = new HavingCondOp(aleft, Const.LE, a, v); :}
+				 | value_exp:v EQ aggregate_exp:a {: RESULT = new HavingCondOp(vleft, Const.EQ, a, v); :}
+				 | value_exp:v NEQ aggregate_exp:a {: RESULT = new HavingCondOp(vleft, Const.NEQ, a, v); :}
+				 | value_exp:v GT aggregate_exp:a {: RESULT = new HavingCondOp(vleft, Const.LT, a, v); :}
+				 | value_exp:v GE aggregate_exp:a {: RESULT = new HavingCondOp(vleft, Const.LE, a, v); :}
+				 | value_exp:v LT aggregate_exp:a {: RESULT = new HavingCondOp(vleft, Const.GT, a, v); :}
+				 | value_exp:v LE aggregate_exp:a {: RESULT = new HavingCondOp(vleft, Const.GE, a, v); :}
+;
+order_exp ::= ORDERBY:o order_column_list:l {: RESULT = new OrderExp(oleft, l); :}
+;
+order_column_list ::= order_column:c {: RESULT = new OrderColumnList(cleft, c, null); :}
+					| order_column:h COMMA order_column_list:t {: RESULT = new OrderColumnList(hleft, h, t); :}
+;
+order_column ::= column:c {: RESULT = new OrderColumn(cleft, true, c); :}
+			   | column:c ASC {: RESULT = new OrderColumn(cleft, true, c); :}
+			   | column:c DESC {: RESULT = new OrderColumn(cleft, false, c); :}
+;
+/* insert expression */
+insert_exp ::= INSERTINTO:i ID:n VALUES LPAREN value_exp_list:vl RPAREN
+			   {: RESULT = new InsertExp(ileft, n, null, vl); :}
+			 | INSERTINTO:i ID:n LPAREN id_list:il RPAREN VALUES LPAREN value_exp_list:vl RPAREN
+			   {: RESULT = new InsertExp(ileft, n, il, vl); :}
+;
+value_exp_list ::= value_exp:e {: RESULT = new ValueExpList(eleft, e, null); :}
+				 | value_exp:h COMMA value_exp_list:t {: RESULT = new ValueExpList(hleft, h, t); :}
+;
+/* delete expression */
+delete_exp ::= DELETE:d FROM ID:n WHERE where_cond_exp:w {: RESULT = new DeleteExp(dleft, n, w); :}
+;
+/* update expression */
+update_exp ::= UPDATE:u ID:n SET update_column_list:l WHERE where_cond_exp:w
+			   {: RESULT = new UpdateExp(uleft, n, l, w); :}
+;
+update_column_list ::= update_column:u {: RESULT = new UpdateColumnList(uleft, u, null); :}
+					 | update_column:h COMMA update_column_list:t {: RESULT = new UpdateColumnList(hleft, h, t); :}
+;
+update_column ::= ID:n EQ value_exp:v {: RESULT = new UpdateColumn(nleft, n, v); :}
+;
+/* drop expression */
+drop_exp ::= DROPINDEX:d id_list:l {: RESULT = new DropExp(dleft, Const.INDEX, l); :}
+		   | DROPTABLE:d id_list:l {: RESULT = new DropExp(dleft, Const.TABLE, l); :}
+		   | DROPVIEW:d id_list:l {: RESULT = new DropExp(dleft, Const.VIEW, l); :}
+;
+/* alter expression */
+alter_exp ::= ALTERTABLE:a ID:tn ADD ID:cn data_type:d {: RESULT = new AlterExp(aleft, Const.ADD, tn, cn, d); :}
+			| ALTERTABLE:a ID:tn ALTERCOLUMN ID:cn data_type:d {: RESULT = new AlterExp(aleft, Const.ALTER, tn, cn, d); :}
+			| ALTERTABLE:a ID:tn DROPCOLUMN ID:cn {: RESULT = new AlterExp(aleft, Const.DROP, tn, cn, null); :}
+;

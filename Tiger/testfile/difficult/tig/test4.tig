@@ -1,0 +1,88 @@
+/* Basic break */
+
+(
+	for i:=1 to 2 do break;
+	for i:=1 to 2 do ();
+	for i:=1 to 2 do (
+		for j:=1 to 2 do break
+	);
+	
+	for i:=1 to 2 do (
+		for j:=1 to 2 do ();
+		break
+	);
+	
+	for i:=1 to 2 do (
+		break
+	);
+	
+	for i:=1 to 2 do 
+		let type a = int
+		in
+			break
+		end;
+	
+	for i:=1 to 2 do
+		let var a := (break; 1)
+		in
+			break
+		end;
+
+	for i:=1 to 2 do
+		let function g() = break			/* Error Break */
+		in
+		end;
+				
+	break;									/* Error Break */
+	
+	for i:=(break;1) to 2 do 				/* Error Break */
+		break;
+		
+	for i:=1 to (break;2) do 				/* Error Break */
+		break;
+		
+	for i:=1 to 2 do
+		let function a() = ()
+		in
+			break
+		end;
+		
+	for i:=1 to 2 do (
+		for j:=1 to 2 do
+			let function a() = ()
+				function b() = ()
+			in
+				break
+			end;
+		break
+	);
+		
+	for i:=1 to 2 do (
+		for j:=1 to 2 do
+			let function a() = ()
+				function b() = ()
+			in
+			end;
+		break
+	);
+	
+	for i:=1 to 2 do 
+		let function a() = for j:=1 to 2 do break
+			function g() = for k:=1 to 2 do break
+		in
+		end;
+	
+	for i:=1 to 2 do
+		let
+			function a() =
+				for j:=1 to 2 do
+				let
+					function b() = ()
+				in
+					break
+				end
+		in
+			break
+		end
+		
+)

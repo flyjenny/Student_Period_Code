@@ -1,0 +1,1 @@
+if 1 then nil else let type a = {} var a:a := nil in a end

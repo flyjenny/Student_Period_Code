@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/103/trunk/JMiniDB/src/metadata
+END
+FieldInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/15/trunk/JMiniDB/src/metadata/FieldInfo.java
+END
+Schema.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/62/trunk/JMiniDB/src/metadata/Schema.java
+END
+ViewMgr.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/103/trunk/JMiniDB/src/metadata/ViewMgr.java
+END
+TableInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/103/trunk/JMiniDB/src/metadata/TableInfo.java
+END
+IndexInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/97/trunk/JMiniDB/src/metadata/IndexInfo.java
+END
+MetadataMgr.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/99/trunk/JMiniDB/src/metadata/MetadataMgr.java
+END
+IndexMgr.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/103/trunk/JMiniDB/src/metadata/IndexMgr.java
+END
+TableMgr.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/103/trunk/JMiniDB/src/metadata/TableMgr.java
+END

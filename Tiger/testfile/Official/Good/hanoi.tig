@@ -1,0 +1,42 @@
+let
+   var N := 0
+
+   function readint() : int =
+      let var i := 0
+          var buffer := getchar()
+          function isdigit(s : string) : int =
+             ord(buffer)>=ord("0") & ord(buffer)<=ord("9")
+       in
+          while isdigit(buffer)
+          do (i := i*10+ord(buffer)-ord("0"); buffer := getchar());
+          i
+       end
+
+   function hanoi(a: string, b: string, c: string, n: int) = 
+      if (n > 1) then ( hanoi(a, c, b, n-1);
+                        print(concat(concat(concat(a, " -> "), c), "\n"));
+                        hanoi(b, a, c, n-1) )
+                 else print(concat(concat(concat(a, " -> "), c), "\n"))
+
+in
+   N := readint();
+   if (N > 0) then hanoi("a", "b", "c", N)
+end
+
+
+/* no input version:
+
+let
+   var N := 13
+
+   function hanoi(a: string, b: string, c: string, n: int) = 
+      if (n > 1) then ( hanoi(a, c, b, n-1);
+                        print(concat(concat(concat(a, " -> "), c), "\n"));
+                        hanoi(b, a, c, n-1) )
+                 else print(concat(concat(concat(a, " -> "), c), "\n"))
+
+in
+   if (N > 0) then hanoi("a", "b", "c", N)
+end
+
+*/

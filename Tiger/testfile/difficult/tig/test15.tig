@@ -1,0 +1,44 @@
+/* Basic Scope */
+
+let
+	type a = int
+	var a := 1
+	
+	function f(a:int, a:string):int = a			/* Unmatched Return Type */
+	function g(a:int, a:string):string = a
+	function h(b:int, b:string):int = a
+	function i(c:int, c:string):int = b			/* Undefined Variable */
+	
+	var a := 1
+	function f(a:int, a:string):int =
+	let
+		var a:=1
+	in
+		a
+	end
+	
+	type a = {a:int, b:int}
+	type b = {a:int, a:int}						/* Multiple Fields With Same Name */
+	type c = array of c
+	
+	var a:a := a{a = a, b = a}
+	var a := 1 
+in
+	a := 2;
+	
+	let
+		var a:string := "slkdfj"
+	in
+		print(a);
+		printi(a)								/* Unmatched Arguments */
+	end;
+	
+	for i:=1 to 2 do
+		let
+			var a := i
+			var i := "sldkjf"
+			function g(i:int, i:int):int = i
+		in
+		end
+		
+end

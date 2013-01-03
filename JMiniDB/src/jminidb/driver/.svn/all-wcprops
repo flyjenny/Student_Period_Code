@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/104/trunk/JMiniDB/src/jminidb/driver
+END
+JMiniDBStatement.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/103/trunk/JMiniDB/src/jminidb/driver/JMiniDBStatement.java
+END
+JMiniDBDatabaseMetaData.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/103/trunk/JMiniDB/src/jminidb/driver/JMiniDBDatabaseMetaData.java
+END
+JMiniDBPrearedStatement.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/96/trunk/JMiniDB/src/jminidb/driver/JMiniDBPrearedStatement.java
+END
+JMiniDBResultSet.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/103/trunk/JMiniDB/src/jminidb/driver/JMiniDBResultSet.java
+END
+JMiniDBDriver.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/103/trunk/JMiniDB/src/jminidb/driver/JMiniDBDriver.java
+END
+JMiniDBResultSetMetaData.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/103/trunk/JMiniDB/src/jminidb/driver/JMiniDBResultSetMetaData.java
+END
+UnimplementException.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/85/trunk/JMiniDB/src/jminidb/driver/UnimplementException.java
+END
+JMiniDBConnection.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/104/trunk/JMiniDB/src/jminidb/driver/JMiniDBConnection.java
+END

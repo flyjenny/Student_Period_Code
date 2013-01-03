@@ -1,0 +1,48 @@
+/* void check */
+
+let
+	function a() = ()
+	var a := 1
+	function b() = a := 1
+	var b := 1
+	function x() = a = b		/* Unmatched Return Type */
+	var a := 1
+	function a() = 
+		let type a = int
+		in
+		end
+	function b() :int = ()		/* Unmatched Return Type */
+	function c() :string = ()	/* Unmatched Return Type */
+	var x := 1
+in
+
+	for i:=1 to 2 do ();
+	
+	while 1 do ();
+	
+	for i:=1 to 2 do 1;	/* Need Void Type */
+	
+	while 1 do 1;		/* Need Void Type */
+	
+	for i:= 1 to 2 do x := 1;
+	
+	while 1 do x := 1;
+	
+	for i:=1 to 2 do
+	(
+		1;
+		2;
+		3;
+		break
+	);
+	
+	while(1) do break;
+	
+	if 1 then a();
+	
+	if 1 then ();
+	
+	if 1 then x := 1;
+	
+	if 1 then a() else x := 1
+end

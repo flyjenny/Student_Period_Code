@@ -1,0 +1,67 @@
+let
+   var N:=1000
+   var M:=168
+   type intArray = array of int
+   type intArray2 = array of intArray
+   var bool := intArray[N+1]of 1
+   var prime:= intArray[M+1]of 0
+   var gps:=intArray[N+1] of 0
+   var result := intArray2[M+1] of (intArray[M+1] of -1) 
+   var primeCount := 0
+   var resultCount := 0
+
+   function getPrime()=
+        let
+            var count:=2
+         in
+            for i:=2 to N do (
+              if (bool[i]=1) then (
+                primeCount := primeCount+1;
+                prime[primeCount] := i;
+                gps[i]:=primeCount
+              );
+              while (i*count<=N) do(
+                 bool[i*count] := 0;
+                 count := count+1
+              );
+              count:=2
+            )
+         end
+
+    function getResult(k1:int,k2:int):int=
+        ( if result[k1][k2]=-1 then
+            if prime[k2]*2-prime[k1]<=N then
+               if bool[prime[k2]*2-prime[k1]] then
+                 result[k1][k2]:=getResult(k2,gps[prime[k2]*2-prime[k1]])+1;
+          if result[k1][k2]=-1 then  result[k1][k2]:=1;
+          result[k1][k2])
+
+    function printF(k1:int,k2:int,k3:int)=
+    ( printi(k1);
+      while k3>0 do
+     ( 
+         print(" ");  
+         printi(k2);
+         k2:=k2*2-k1; 
+         k1:=(k1+k2)/2;
+         k3:=k3-1
+     );
+     print("\n")  
+    )
+ 
+
+in
+   getPrime();
+   for i:=1 to primeCount-1 do
+         for j:=i+1 to primeCount do
+           if result[i][j]=-1 then(  
+               result[i][j] := getResult(i,j);
+               if result[i][j]>1 then(
+               printF(prime[i],prime[j],result[i][j]);
+               resultCount := resultCount+1
+              )
+           ); 
+   print("Total: ");
+   printi(resultCount);
+   print("\n")
+end

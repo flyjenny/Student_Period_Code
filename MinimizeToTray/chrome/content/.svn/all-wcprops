@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/minimizetotray/!svn/ver/59/trunk/chrome/content
+END
+downloadOverlay.xul
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/downloadOverlay.xul
+END
+calendarOverlay.xul
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/calendarOverlay.xul
+END
+download.js
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/download.js
+END
+prefs.xul
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/minimizetotray/!svn/ver/32/trunk/chrome/content/prefs.xul
+END
+calender.js
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/calender.js
+END
+mailOverlay.xul
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/mailOverlay.xul
+END
+minimizetotray.xul
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/minimizetotray/!svn/ver/44/trunk/chrome/content/minimizetotray.xul
+END
+browserOverlay.xul
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/browserOverlay.xul
+END
+mail.js
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/minimizetotray/!svn/ver/52/trunk/chrome/content/mail.js
+END
+browser.js
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/browser.js
+END
+prefs-window.js
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/prefs-window.js
+END
+messengerOverlay.xul
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/messengerOverlay.xul
+END
+core.js
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/minimizetotray/!svn/ver/59/trunk/chrome/content/core.js
+END
+navigatorOverlay.xul
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/navigatorOverlay.xul
+END
+collabOverlay.xul
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/collabOverlay.xul
+END
+playerOverlay.xul
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/playerOverlay.xul
+END
+turbo.js
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/turbo.js
+END
+turboBrowser.xul
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/turboBrowser.xul
+END
+player.js
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/minimizetotray/!svn/ver/44/trunk/chrome/content/player.js
+END
+turboNavigator.xul
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/minimizetotray/!svn/ver/53/trunk/chrome/content/turboNavigator.xul
+END

@@ -1,0 +1,8 @@
+/* By Jobo */
+
+let
+type a = {}
+var a:a := a{}
+in
+a.a="a"		/* No Such Field */
+end 

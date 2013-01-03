@@ -1,0 +1,1 @@
+stu为数据库~里面table为student

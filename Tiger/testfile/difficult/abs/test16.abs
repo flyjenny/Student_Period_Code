@@ -1,0 +1,21 @@
+LetExp(
+ DecList(
+  TypeDec(a,
+   RecordTy(
+    Fieldlist())),
+  DecList(
+   VarDec(a,
+    a,
+    RecordExp(a,
+     FieldExpList()),
+    true),
+   DecList())),
+ SeqExp(
+  ExpList(
+   OpExp(
+    EQ,
+    varExp(
+     FieldVar(
+      SimpleVar(a),
+      a)),
+    StringExp(a)))))

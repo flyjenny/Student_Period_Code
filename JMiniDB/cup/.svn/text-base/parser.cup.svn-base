@@ -1,0 +1,221 @@
+package parse;
+
+import absyn.*;
+
+/* Preliminaries to set up and use the scanner. */
+action code {:
+
+:};
+
+parser code  {: 
+	Scanner lexer;
+	ErrorMsg errorMsg;
+
+	public void syntax_error(java_cup.runtime.Symbol current) {
+		report_error("Syntax error (" + current.sym + ")", current);
+	}
+
+	public void report_error(String message, java_cup.runtime.Symbol tok) {
+		errorMsg.error(tok.left, message);
+	}
+
+	public parser(Scanner l, ErrorMsg err) {
+		this();
+		errorMsg = err;
+		lexer = l;
+	}
+
+	public Absyn result;
+:};
+
+init with {: :}
+
+scan with {: return lexer.nextToken(); :};
+
+
+/* Terminals (tokens returned by the scanner). */
+terminal String ID, STRING, DATEVAL, TIMEVAL;
+terminal Integer INTVAL;
+terminal Double FLOATVAL;
+terminal SEMICOLON, COMMA, DOT, EQ, NEQ, GT, LT, GE, LE, PLUS, MINUS, TIMES,
+	DIVIDE, LPAREN, RPAREN, LBRACE, RBRACE, NOT, AND, OR, LIKE, ESCAPE, EXISTS, 
+	IN, ALL, ANY, NULL, SELECT, FROM, WHERE, GROUPBY, HAVING, ORDERBY, ASC, DESC, 
+	AS, DISTINCT, CREATE, DROP, ALTER, DATABASE, TABLE, INSERTINTO, UPDATE, DELETE, 
+	VALUES, SET, ADD, DEFAULT, PRIMARYKEY, UNIQUE, INDEX, ON, INT, FLOAT, CHAR, VARCHAR, 
+	BOOLEAN, DATE, TIME, AVG, COUNT, MIN, MAX, SUM, REFERENCES, FOREIGNKEY, CHECK, VIEW, 
+	START, TRANSACTION, COMMIT, ROLLBACK;
+
+/* Non-terminals */
+non terminal Query plan;
+non terminal Query query;
+non terminal SFW sfw;
+non terminal Value value;
+non terminal ValueList valuelist;
+non terminal Attribute attribute;
+non terminal AttributeList attrlist;
+non terminal Const constant;
+non terminal Integer func;
+non terminal Integer aop;
+non terminal SelList selectlist;
+non terminal SelExp selectexpr;
+non terminal TableList tablelist;
+non terminal Table table;
+non terminal Condition condition;
+non terminal BoolExp boolexpr;
+non terminal Integer cop;
+non terminal Attribute orderclause;
+non terminal CreateDB createdb;
+non terminal DropDB dropdb;
+non terminal CreateTbl createtbl;
+non terminal DropTbl droptbl;
+non terminal DefList deflist;
+non terminal CreateDef createdef;
+non terminal ColDef coldef;
+non terminal DataType datatype;
+non terminal InsertClause insert;
+non terminal DeleteClause delete;
+non terminal UpdateClause update;
+non terminal SetCol setcol;
+non terminal SetList setlist;
+non terminal CreateIdx createindex;
+non terminal DropIdx dropindex;
+non terminal CreateView createview;
+non terminal DropView dropview;
+
+
+/* Precedences */
+precedence nonassoc EQ, NEQ, LT, LE, GT, GE;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE;
+precedence right OR;
+precedence right AND;
+
+
+/* The grammar */
+start with plan;
+
+plan ::= query:q {: parser.result = q; :};
+plan ::= createdb:c {: parser.result = c; :};
+plan ::= dropdb:c {: parser.result = c; :};
+plan ::= createtbl:c {: parser.result = c; :};
+plan ::= droptbl:c {: parser.result = c; :};
+plan ::= createview:c {: parser.result = c; :};
+plan ::= dropview:c {: parser.result = c; :};
+plan ::= createindex:c {: parser.result = c; :};
+plan ::= dropindex:c {: parser.result = c; :};
+plan ::= insert:c {: parser.result = c; :};
+plan ::= delete:c {: parser.result = c; :};
+plan ::= update:c {: parser.result = c; :};
+
+query ::= sfw:s {: RESULT = new Query(sleft, s); :};
+
+sfw ::= SELECT:pos selectlist:sl FROM tablelist:tl {: RESULT = new SFW(posleft, sl, tl, null, null, null, null); :}
+	 |  SELECT:pos selectlist:sl FROM tablelist:tl WHERE condition:c {: RESULT = new SFW(posleft, sl, tl, c, null, null, null); :}
+	 |  SELECT:pos selectlist:sl FROM tablelist:tl GROUPBY attrlist:g {: RESULT = new SFW(posleft, sl, tl, null, g, null, null); :}
+	 |  SELECT:pos selectlist:sl FROM tablelist:tl GROUPBY attrlist:g HAVING condition:hc {: RESULT = new SFW(posleft, sl, tl, null, g, new HvCondition(hc), null); :}
+	 |  SELECT:pos selectlist:sl FROM tablelist:tl ORDERBY attrlist:o {: RESULT = new SFW(posleft, sl, tl, null, null, null, o); :}
+	 |  SELECT:pos selectlist:sl FROM tablelist:tl WHERE condition:c GROUPBY attrlist:g {: RESULT = new SFW(posleft, sl, tl, c, g, null, null); :}
+	 |  SELECT:pos selectlist:sl FROM tablelist:tl WHERE condition:c GROUPBY attrlist:g HAVING condition:hc {: RESULT = new SFW(posleft, sl, tl, c, g, new HvCondition(hc), null); :}
+	 |  SELECT:pos selectlist:sl FROM tablelist:tl WHERE condition:c ORDERBY attrlist:o {: RESULT = new SFW(posleft, sl, tl, c, null, null, o); :}
+	 |  SELECT:pos selectlist:sl FROM tablelist:tl WHERE condition:c GROUPBY attrlist:g ORDERBY attrlist:o {: RESULT = new SFW(posleft, sl, tl, c, g, null, o); :}
+	 |  SELECT:pos selectlist:sl FROM tablelist:tl WHERE condition:c GROUPBY attrlist:g HAVING condition:hc ORDERBY attrlist:o {: RESULT = new SFW(posleft, sl, tl, c, g, new HvCondition(hc), o); :};
+
+value ::= LPAREN value:v RPAREN {: RESULT = v; :}
+	   |  attribute:a {: RESULT = a; :}
+	   |  DISTINCT attribute:a {: a.distinct = true; RESULT = a; :}
+	   |  constant:c {: RESULT = c; :}
+	   |  value:lv aop:op value:rv {: RESULT = new AopValue(lvleft, lv, op, rv); :}
+	   |  query:q {: RESULT = new AtomValue(q); :};
+valuelist ::= value:v {: RESULT = new ValueList(v); :}
+		   |  value:v COMMA valuelist:vl {: RESULT = new ValueList(v, vl); :};
+func ::= AVG {: RESULT = Attribute.AVG; :}
+	  |  COUNT {: RESULT = Attribute.COUNT; :}
+	  |	 MIN {: RESULT = Attribute.MIN; :}
+	  |  MAX {: RESULT = Attribute.MAX; :}
+	  |  SUM {: RESULT = Attribute.SUM; :};
+aop ::= PLUS {: RESULT = AopValue.PLUS; :}
+	 |  MINUS {: RESULT = AopValue.MINUS; :}
+	 |  TIMES {: RESULT = AopValue.TIMES; :}
+	 |  DIVIDE {: RESULT = AopValue.DIVIDE; :};
+attribute ::= ID:cn {: RESULT = new Attribute(cnleft, cn); :}
+		   |  ID:tn DOT ID:cn {: RESULT = new Attribute(tnleft, tn, cn); :};
+attrlist ::= attribute:a {: RESULT = new AttributeList(a); :}
+		  |  attribute:a ASC {: RESULT = new AttributeList(a); :}
+		  |  attribute:a DESC {: a.order = Attribute.DESC; RESULT = new AttributeList(a); :}
+		  |  attribute:a COMMA attrlist:al {: RESULT = new AttributeList(a, al); :};
+constant ::= INTVAL:v {: RESULT = new Const(vleft, Const.INT, v); :}
+		  |  FLOATVAL:v {: RESULT = new Const(vleft, Const.FLOAT, v); :}
+		  |  STRING:v {: RESULT = new Const(vleft, Const.STRING, v); :}
+		  |  DATEVAL:v {: RESULT = new Const(vleft, Const.DATE, v); :}
+		  |  TIMEVAL:v {: RESULT = new Const(vleft, Const.TIME, v); :};
+
+cop ::= EQ {: RESULT = ValTerm.EQ; :}
+	 |  NEQ {: RESULT = ValTerm.NEQ; :}
+	 |  GT {: RESULT = ValTerm.GT; :}
+	 |  LT {: RESULT = ValTerm.LT; :}
+	 |  GE {: RESULT = ValTerm.GE; :}
+	 |  LE {: RESULT = ValTerm.LE; :};
+boolexpr ::= LPAREN boolexpr:b RPAREN {: RESULT = b; :}
+		  |	 NOT boolexpr:b {: RESULT = new BoolTerm(BoolTerm.NOT, b); :}
+		  |  boolexpr:lb AND boolexpr:rb {: RESULT = new BoolTerm(lb, BoolTerm.AND, rb); :}
+		  |  boolexpr:lb OR boolexpr:rb {: RESULT = new BoolTerm(lb, BoolTerm.OR, rb); :}
+		  |  value:lv cop:op value:rv {: RESULT = new ValTerm(lvleft, lv, op, rv); :}
+		  |  EXISTS:pos LPAREN query:q RPAREN {: RESULT = new ValTerm(posleft, ValTerm.EXISTS, q); :}
+		  |  value:v IN LPAREN query:q RPAREN {: RESULT = new ValTerm(vleft, v, ValTerm.IN, q); :}
+		  |  value:v cop:op ANY LPAREN query:q RPAREN {: RESULT = new ValTerm(vleft, v, op, ValTerm.ANY, q); :}
+		  |  value:v cop:op ALL LPAREN query:q RPAREN {: RESULT = new ValTerm(vleft, v, op, ValTerm.ALL, q); :};
+
+selectexpr ::= TIMES {: RESULT = new SelExp(0); :}
+		   |  func:f LPAREN TIMES RPAREN {: RESULT = new SelExp(f); :}
+		   |  value:v {: RESULT = new SelExp(v); :}
+		   |  value:v AS ID:n {: RESULT = new SelExp(v, n); :}
+		   |  func:f LPAREN attribute:a RPAREN {: RESULT = new SelExp(f, a); :}
+		   |  func:f LPAREN attribute:a RPAREN AS ID:n {: RESULT = new SelExp(f, a, n); :};
+selectlist ::= selectexpr:se {: RESULT = new SelList(se); :}
+			|  selectexpr:se COMMA selectlist:sl {: RESULT = new SelList(se, sl); :};
+table ::= ID:tn {: RESULT = new Table(tnleft, tn); :}
+	   |  ID:tn AS ID:a {: RESULT = new Table(tnleft, tn, a); :}
+	   |  LPAREN query:q RPAREN AS ID:a {: RESULT = new Table(qleft, q, a); :};
+tablelist ::= table:t {: RESULT = new TableList(t); :}
+		   |  table:t COMMA tablelist:tl {: RESULT = new TableList(t, tl); :};
+condition ::= boolexpr:c {: RESULT = new Condition(c); :};
+
+
+createdb ::= CREATE:pos DATABASE ID:db {: RESULT = new CreateDB(posleft, db); :};
+dropdb ::= DROP:pos DATABASE ID:db {: RESULT = new DropDB(posleft, db); :};
+createtbl ::= CREATE:pos TABLE ID:tbl LPAREN deflist:dl RPAREN {: RESULT = new CreateTbl(posleft, tbl, dl); :};
+droptbl ::= DROP:pos TABLE ID:tbl {: RESULT = new DropTbl(posleft, tbl); :};
+deflist ::= createdef:d {: RESULT = new DefList(d); :}
+		 |  createdef:d COMMA deflist:dl {: RESULT = new DefList(d, dl); :};
+createdef ::= coldef:cd {: RESULT = cd; :}
+		   |  PRIMARYKEY LPAREN attrlist:a RPAREN {: RESULT = new PriKeyDef(a); :}
+		   |  FOREIGNKEY LPAREN attribute:a RPAREN REFERENCES ID:tn LPAREN ID:cn RPAREN {: RESULT = new ForgnKeyDef(a, new Attribute(tnleft, tn, cn)); :}
+		   |  CHECK LPAREN condition:c RPAREN {: RESULT = new CheckDef(c); :};
+coldef ::= attribute:a datatype:ty {: RESULT = new ColDef(aleft, a, ty); :}
+		|  attribute:a datatype:ty CHECK LPAREN condition:c RPAREN {: RESULT = new ColDef(aleft, a, ty, c); :}
+		|  attribute:a datatype:ty DEFAULT constant:c {: RESULT = new ColDef(aleft, a, ty, c); :}
+		|  attribute:a datatype:ty PRIMARYKEY {: ColDef cd = new ColDef(aleft, a, ty); cd.setPrimaryKey(); RESULT = cd; :}
+		|  attribute:a datatype:ty PRIMARYKEY CHECK LPAREN condition:c RPAREN {: ColDef cd = new ColDef(aleft, a, ty, c); cd.setPrimaryKey(); RESULT = cd; :}
+		|  attribute:a datatype:ty REFERENCES ID:tn LPAREN ID:cn RPAREN {: ColDef cd = new ColDef(aleft, a, ty); cd.setForeignKey(new Attribute(tnleft, tn, cn)); RESULT = cd; :}
+		|  attribute:a datatype:ty REFERENCES ID:tn LPAREN ID:cn RPAREN CHECK LPAREN condition:c RPAREN {: ColDef cd = new ColDef(aleft, a, ty, c); cd.setForeignKey(new Attribute(tnleft, tn, cn)); RESULT = cd; :};
+datatype ::= INT {: RESULT = new DataType(DataType.INT); :}
+		  |  FLOAT {: RESULT = new DataType(DataType.FLOAT); :}
+		  |  CHAR LPAREN INTVAL:m RPAREN {: RESULT = new DataType(DataType.CHAR, (Integer)m); :}
+		  |  VARCHAR LPAREN INTVAL:m RPAREN {: RESULT = new DataType(DataType.VARCHAR, (Integer)m); :}
+		  |  BOOLEAN {: RESULT = new DataType(DataType.BOOLEAN); :}
+		  |  DATE {: RESULT = new DataType(DataType.DATE); :}
+		  |  TIME {: RESULT = new DataType(DataType.TIME); :};
+insert ::= INSERTINTO:pos ID:tbl VALUES LPAREN valuelist:vl RPAREN {: RESULT = new InsertClause(posleft, tbl, vl); :}
+		|  INSERTINTO:pos ID:tbl LPAREN query:q RPAREN {: RESULT = new InsertClause(posleft, tbl, q); :};
+delete ::= DELETE:pos FROM ID:tbl {: RESULT = new DeleteClause(posleft, tbl); :}
+		|  DELETE:pos FROM ID:tbl WHERE condition:c {: RESULT = new DeleteClause(posleft, tbl, c); :};
+update ::= UPDATE:pos ID:tbl SET setlist:sl {: RESULT = new UpdateClause(posleft, tbl, sl); :}
+		|  UPDATE:pos ID:tbl SET setlist:sl WHERE condition:c {: RESULT = new UpdateClause(posleft, tbl, sl, c); :};
+setcol ::= attribute:cn EQ value:v {: RESULT = new SetCol(cnleft, cn, v); :};
+setlist ::= setcol:s {: RESULT = new SetList(s); :}
+		 |  setcol:s COMMA setlist:sl {: RESULT = new SetList(s, sl); :};
+createindex ::= CREATE:pos INDEX ID:idx ON ID:tbl LPAREN attribute:cn RPAREN {: RESULT = new CreateIdx(posleft, idx, tbl, cn, false); :}
+			 |  CREATE:pos UNIQUE INDEX ID:idx ON ID:tbl LPAREN attribute:cn RPAREN {: RESULT = new CreateIdx(posleft, idx, tbl, cn, true); :};
+dropindex ::= DROP:pos INDEX ID:idx ON ID:tbl {: RESULT = new DropIdx(posleft, idx, tbl); :};
+createview ::= CREATE:pos VIEW ID:vn AS query:q {: RESULT = new CreateView(posleft, vn, q); :};
+dropview ::= DROP:pos VIEW ID:vn {: RESULT = new DropView(posleft, vn); :};

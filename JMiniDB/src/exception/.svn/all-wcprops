@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/103/trunk/JMiniDB/src/exception
+END
+FieldNotFound.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/96/trunk/JMiniDB/src/exception/FieldNotFound.java
+END
+CheckFailError.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/103/trunk/JMiniDB/src/exception/CheckFailError.java
+END
+ObjectExistError.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/103/trunk/JMiniDB/src/exception/ObjectExistError.java
+END
+ObjectNotExistError.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/82/trunk/JMiniDB/src/exception/ObjectNotExistError.java
+END

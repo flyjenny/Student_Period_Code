@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/103/trunk/JMiniDB/src/planner
+END
+Planner.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/102/trunk/JMiniDB/src/planner/Planner.java
+END
+SimpleQueryPlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/103/trunk/JMiniDB/src/planner/SimpleQueryPlanner.java
+END
+UpdatePlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/97/trunk/JMiniDB/src/planner/UpdatePlanner.java
+END
+QueryPlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/15/trunk/JMiniDB/src/planner/QueryPlanner.java
+END
+SimpleUpdatePlanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/103/trunk/JMiniDB/src/planner/SimpleUpdatePlanner.java
+END
+TableSchemaMismatchException.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/36/trunk/JMiniDB/src/planner/TableSchemaMismatchException.java
+END

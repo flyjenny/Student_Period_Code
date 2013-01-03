@@ -1,0 +1,23 @@
+package Tree;
+
+public class TEMP extends Exp
+  {
+	public Temp.Temp temp;
+	
+	public TEMP(Temp.Temp t)
+	  {
+		temp = t;
+	  }
+	
+	@Override
+	public ExpList kids()
+	  {
+		return null;
+	  }
+	
+	@Override
+	public Exp build(ExpList kids)
+	  {
+		return this;
+	  }
+  }

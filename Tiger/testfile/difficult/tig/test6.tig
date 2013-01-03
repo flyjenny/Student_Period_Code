@@ -1,0 +1,21 @@
+/* basic nil (2) */
+
+let
+	var a := nil		/* Nil Should Be Assigned To A Type-Defined Variable */
+	type a = {}
+	var a:a := nil
+	
+	function g():a = nil
+	function h():a = (nil)
+	function i():a = (nil; nil) /* Error Nil Occur */
+	
+	function w(a:a) = w(nil)
+	
+in
+	a := nil;
+	if a <> nil then ();
+	if nil <> a then ();
+	if a = nil then ();
+	
+	if nil = nil then ()			/* Error of Comparing Nil and Nil */
+end

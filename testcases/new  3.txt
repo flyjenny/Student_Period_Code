@@ -1,0 +1,77 @@
+select model, speed as gigahertz, hd as gigabytes from pc where price < 1000
+
+SelectColumnList(
+  SelectColumn(
+    null
+    AlgebraOp(
+      Column(
+        null
+        model
+      ) [Column]
+      null
+      null
+    ) [AlgebraOp]
+  ) [SelectColumn]
+  SelectColumnList(
+    SelectColumn(
+      gigahertz
+      AlgebraOp(
+        Column(
+          null
+          speed
+        ) [Column]
+        null
+        null
+      ) [AlgebraOp]
+    ) [SelectColumn]
+    SelectColumnList(
+      SelectColumn(
+        gigabytes
+        AlgebraOp(
+          Column(
+            null
+            hd
+          ) [Column]
+          null
+          null
+        ) [AlgebraOp]
+      ) [SelectColumn]
+      null
+    ) [SelectColumnList]
+  ) [SelectColumnList]
+) [SelectColumnList]
+****************************
+FromTableList(
+  FromTable(
+    pc
+    null
+    null
+  ) [FromTable]
+  null
+) [FromTableList]
+****************************
+WhereExp(
+  CmpExp(
+    false
+    24
+    CmpOp(
+      28
+      Column(
+        null
+        price
+      ) [Column]
+      null
+      null
+    ) [CmpOp]
+    CmpOp(
+      28
+      null
+      null
+      IntExp(
+        1000
+      ) [IntExp]
+    ) [CmpOp]
+  ) [CmpExp]
+  null
+  null
+) [WhereExp]

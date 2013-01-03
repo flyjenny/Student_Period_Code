@@ -1,0 +1,91 @@
+/* basic binary operator */
+
+let
+	type a = {}
+	type b = array of int
+	
+	var a := 1
+	var b := "sdlkfj"
+	var c:a := nil
+	var d:b := b [10] of 1
+in
+	a + a;
+	a - a;
+	a * a;
+	a / a;
+	a = a;
+	a <> a;
+	a < a;
+	a > a;
+	a <= a;
+	a >= a;
+
+	let	var a := "sldkfj"
+	in
+	a + a;		/* Need Integer */
+	a - a;		/* Need Integer */
+	a * a;		/* Need Integer */
+	a / a;		/* Need Integer */
+	a = a;
+	a <> a;
+	a < a;
+	a > a;
+	a <= a;
+	a >= a
+	end;
+
+	let	var a:a := a{}
+	in
+	a + a;		/* Need Integer */
+	a - a;		/* Need Integer */
+	a * a;		/* Need Integer */
+	a / a;		/* Need Integer */
+	a = a;
+	a <> a;
+	a < a;		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+	a > a;		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+	a <= a;		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+	a >= a		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+	end;
+
+	let	var a:b := b [10] of 0
+	in
+	a + a;		/* Need Integer */
+	a - a;		/* Need Integer */
+	a * a;		/* Need Integer */
+	a / a;		/* Need Integer */
+	a = a;
+	a <> a;
+	a < a;		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+	a > a;		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+	a <= a;		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+	a >= a		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+	end;
+	
+	a+b;		/*  Need Integer */
+	a=b;		/* Need Same Type */
+	a<b;		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+	
+	c+b;		/*  Need Integer */
+	c=b;		/* Need Same Type */
+	c<b;		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+	
+	d+b;		/*  Need Integer */
+	d=b;		/* Need Same Type */
+	d<b;		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+	
+	a+c;		/*  Need Integer */
+	a=c;		/* Need Same Type */
+	a<c;		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+	
+	a+d;		/*  Need Integer */
+	a=d;		/* Need Same Type */
+	a<d;		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+	
+	c+d;		/*  Need Integer */
+	c=d;		/* Need Same Type */
+	c<d;		/* Comparing 2 Uncomparable Variables or Mismatched Type */
+
+	c = nil;
+	c <> nil
+end

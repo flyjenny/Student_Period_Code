@@ -1,0 +1,75 @@
+/* constant for variable */
+
+let
+	var a := 1
+in
+	for i:=1 to 2 do ();
+	
+	for i:=1 to 2 do a := i;
+	
+	for i:=1 to 2 do i := a;		/* Loop Variable Can't Be Assigned */
+	
+	for i:=1 to 2 do
+		for j:=1 to 2 do ();
+		
+	for i:=1 to 2 do
+		for i:=1 to 2 do ();
+		
+	for i:=i to 2 do ();			/* Undefined Variable */
+	
+	for i:=1 to i+1 do ();			/* Undefined Variable */
+	
+	for i:=1 to 2 do
+	let
+		function g() : int = i
+	in
+	end;
+	
+	for i:=1 to 2 do
+	let function g() : int = ( i := a; i )		/* Loop Variable Can't Be Assigned */
+	in
+	end;
+	
+	for i:=1 to 2 do
+	let function g(i:int) : int = ( i := a; i )
+	in
+	end;
+	
+	for i:=1 to 2 do
+		let function g() = ()
+		in
+			a := i
+		end;
+	
+	for i:=1 to 2 do
+		let function g() = ()
+		in
+			i := a								/* Loop Variable Can't Be Assigned */
+		end;
+		
+	for i:=1 to 2 do
+		let var i := 1
+		in
+			a := i
+		end;
+		
+	for i:=1 to 2 do
+		let var i := "sdklfj"
+		in
+			a := i								/* Unmatched Type */
+		end;
+		
+	for i:=1 to 2 do
+		let var i := 1
+		in
+			i := a
+		end;
+		
+	for i:=1 to 2 do (
+		let var i := 1
+		in
+			i := a
+		end;
+		i := a									/* Loop Variable Can't Be Assigned */
+	)
+end

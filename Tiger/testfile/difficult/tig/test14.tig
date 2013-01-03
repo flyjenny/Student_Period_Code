@@ -1,0 +1,35 @@
+/* basic expr */
+
+let
+	var a := 1
+
+	type a = {a :int, b: int}
+	var b:a := nil
+	var b:a := a{a = 1, b = 1}
+	
+	function g(a:int, b:int, a:int):int = a
+
+	type x = array of int
+	var c:x := x [10] of 0
+in
+	1;
+	"sdlkfj";
+	nil;						/* Error Nil Occur */
+	a;
+	a := a;
+	b := a{a = 1, b = 1};
+	(1;2;3;4;5);
+	g(1,2,3);
+	g(1,2);						/* Less Arguments */
+	g();						/* Less Arguments */
+	g(1,2,3,4);					/* More Arguments */
+	g("sdlkfj",1);				/* Unmatched Arguments & Less Arguments */
+	c := x [10] of 1;
+	
+	if (1) then ();
+	if 1 then 1 else 1;
+	
+	while 1 do ();
+	
+	for i:=1 to 2 do break
+end

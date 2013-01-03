@@ -1,0 +1,128 @@
+36988064 INFO  [2012-01-27 21:41:02]  TotalCount:196 DuplicateCount:196
+36988064 INFO  [2012-01-27 21:41:02]  4571    RunningTime:6767ms
+36992064 DEBUG [2012-01-27 21:41:06]  Request:
+36992064 DEBUG [2012-01-27 21:41:06]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+36994914 DEBUG [2012-01-27 21:41:09]  Response:
+36994914 DEBUG [2012-01-27 21:41:09]  https StatusCode:200
+36994914 DEBUG [2012-01-27 21:41:09]  Api-Server-IP:10.75.0.173
+36994914 DEBUG [2012-01-27 21:41:09]  Content-Type:application/json;charset=UTF-8
+36994914 DEBUG [2012-01-27 21:41:09]  Vary:Accept-Encoding
+36994914 DEBUG [2012-01-27 21:41:09]  Server:weibo
+36994914 DEBUG [2012-01-27 21:41:09]  Content-Length:283076
+36994914 DEBUG [2012-01-27 21:41:09]  Date:Fri, 27 Jan 2012 13:41:09 GMT
+36994915 DEBUG [2012-01-27 21:41:09]  X-Varnish:1979020356
+36994915 DEBUG [2012-01-27 21:41:09]  Age:0
+36994915 DEBUG [2012-01-27 21:41:09]  Via:1.1 varnish
+36994915 DEBUG [2012-01-27 21:41:09]  Connection:keep-alive
+37005920 DEBUG [2012-01-27 21:41:20]  -1 null
+37005921 INFO  [2012-01-27 21:41:20]  4572    RunningTime:13857ms
+37009921 DEBUG [2012-01-27 21:41:24]  Request:
+37009921 DEBUG [2012-01-27 21:41:24]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37011923 DEBUG [2012-01-27 21:41:26]  -1 null
+37011924 INFO  [2012-01-27 21:41:26]  4573    RunningTime:2003ms
+37015925 DEBUG [2012-01-27 21:41:30]  Request:
+37015925 DEBUG [2012-01-27 21:41:30]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37023173 DEBUG [2012-01-27 21:41:37]  -1 null
+37023175 INFO  [2012-01-27 21:41:37]  4574    RunningTime:7249ms
+37027175 DEBUG [2012-01-27 21:41:41]  Request:
+37027175 DEBUG [2012-01-27 21:41:41]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37034399 DEBUG [2012-01-27 21:41:48]  -1 null
+37034400 INFO  [2012-01-27 21:41:48]  4575    RunningTime:7225ms
+37038400 DEBUG [2012-01-27 21:41:52]  Request:
+37038400 DEBUG [2012-01-27 21:41:52]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37045694 DEBUG [2012-01-27 21:41:59]  -1 null
+37045695 INFO  [2012-01-27 21:41:59]  4576    RunningTime:7295ms
+37049696 DEBUG [2012-01-27 21:42:03]  Request:
+37049696 DEBUG [2012-01-27 21:42:03]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37051753 DEBUG [2012-01-27 21:42:06]  -1 null
+37051754 INFO  [2012-01-27 21:42:06]  4577    RunningTime:2058ms
+37055767 DEBUG [2012-01-27 21:42:10]  Request:
+37055767 DEBUG [2012-01-27 21:42:10]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37063123 DEBUG [2012-01-27 21:42:17]  Response:
+37063123 DEBUG [2012-01-27 21:42:17]  https StatusCode:200
+37063123 DEBUG [2012-01-27 21:42:17]  Api-Server-IP:10.75.0.174
+37063123 DEBUG [2012-01-27 21:42:17]  Content-Type:application/json;charset=UTF-8
+37063123 DEBUG [2012-01-27 21:42:17]  Vary:Accept-Encoding
+37063123 DEBUG [2012-01-27 21:42:17]  Server:weibo
+37063123 DEBUG [2012-01-27 21:42:17]  Content-Length:288486
+37063123 DEBUG [2012-01-27 21:42:17]  Date:Fri, 27 Jan 2012 13:42:13 GMT
+37063123 DEBUG [2012-01-27 21:42:17]  X-Varnish:1488119689
+37063123 DEBUG [2012-01-27 21:42:17]  Age:0
+37063123 DEBUG [2012-01-27 21:42:17]  Via:1.1 varnish
+37063123 DEBUG [2012-01-27 21:42:17]  Connection:keep-alive
+37071976 DEBUG [2012-01-27 21:42:26]  -1 null
+37071977 INFO  [2012-01-27 21:42:26]  4578    RunningTime:16209ms
+37075977 DEBUG [2012-01-27 21:42:30]  Request:
+37075977 DEBUG [2012-01-27 21:42:30]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37078059 DEBUG [2012-01-27 21:42:32]  -1 null
+37078060 INFO  [2012-01-27 21:42:32]  4579    RunningTime:2083ms
+37082061 DEBUG [2012-01-27 21:42:36]  Request:
+37082061 DEBUG [2012-01-27 21:42:36]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37084067 DEBUG [2012-01-27 21:42:38]  -1 null
+37084068 INFO  [2012-01-27 21:42:38]  4580    RunningTime:2007ms
+37088068 DEBUG [2012-01-27 21:42:42]  Request:
+37088068 DEBUG [2012-01-27 21:42:42]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37090070 DEBUG [2012-01-27 21:42:44]  -1 null
+37090071 INFO  [2012-01-27 21:42:44]  4581    RunningTime:2002ms
+37094071 DEBUG [2012-01-27 21:42:48]  Request:
+37094071 DEBUG [2012-01-27 21:42:48]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37096074 DEBUG [2012-01-27 21:42:50]  -1 null
+37096075 INFO  [2012-01-27 21:42:50]  4582    RunningTime:2004ms
+37100076 DEBUG [2012-01-27 21:42:54]  Request:
+37100076 DEBUG [2012-01-27 21:42:54]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37102079 DEBUG [2012-01-27 21:42:56]  -1 null
+37102080 INFO  [2012-01-27 21:42:56]  4583    RunningTime:2004ms
+37106080 DEBUG [2012-01-27 21:43:00]  Request:
+37106080 DEBUG [2012-01-27 21:43:00]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37108084 DEBUG [2012-01-27 21:43:02]  -1 null
+37108085 INFO  [2012-01-27 21:43:02]  4584    RunningTime:2005ms
+37112085 DEBUG [2012-01-27 21:43:06]  Request:
+37112085 DEBUG [2012-01-27 21:43:06]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37114088 DEBUG [2012-01-27 21:43:08]  -1 null
+37114089 INFO  [2012-01-27 21:43:08]  4585    RunningTime:2004ms
+37118090 DEBUG [2012-01-27 21:43:12]  Request:
+37118090 DEBUG [2012-01-27 21:43:12]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37120092 DEBUG [2012-01-27 21:43:14]  -1 null
+37120093 INFO  [2012-01-27 21:43:14]  4586    RunningTime:2003ms
+37124093 DEBUG [2012-01-27 21:43:18]  Request:
+37124093 DEBUG [2012-01-27 21:43:18]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+37126110 DEBUG [2012-01-27 21:43:20]  -1 null
+37126111 INFO  [2012-01-27 21:43:20]  4587    RunningTime:2018ms
+0      DEBUG [2012-03-07 19:17:14]  Request:
+21     DEBUG [2012-03-07 19:17:14]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+808    DEBUG [2012-03-07 19:17:15]  Response:
+808    DEBUG [2012-03-07 19:17:15]  https StatusCode:403
+808    DEBUG [2012-03-07 19:17:15]  Api-Server-IP:10.73.14.161
+809    DEBUG [2012-03-07 19:17:15]  Content-Type:application/json;charset=UTF-8
+809    DEBUG [2012-03-07 19:17:15]  Vary:Accept-Encoding
+809    DEBUG [2012-03-07 19:17:15]  Server:weibo
+809    DEBUG [2012-03-07 19:17:15]  Content-Length:125
+809    DEBUG [2012-03-07 19:17:15]  Date:Wed, 07 Mar 2012 11:17:17 GMT
+809    DEBUG [2012-03-07 19:17:15]  X-Varnish:1308196813
+809    DEBUG [2012-03-07 19:17:15]  Age:0
+809    DEBUG [2012-03-07 19:17:15]  Via:1.1 varnish
+809    DEBUG [2012-03-07 19:17:15]  Connection:close
+809    DEBUG [2012-03-07 19:17:15]  SINA-LB:cWgxMzIuaGEucWgyLmJqLmxvYWRiYWxhbmNlLnNpbg==
+816    DEBUG [2012-03-07 19:17:15]  {"error":"applications over the unaudited use restrictions!","error_code":21321,"request":"/2/statuses/public_timeline.json"}
+
+822    DEBUG [2012-03-07 19:17:15]  21321 applications over the unaudited use restrictions!
+910    INFO  [2012-03-07 19:17:15]  1       RunningTime:915ms
+4910   DEBUG [2012-03-07 19:17:19]  Request:
+4910   DEBUG [2012-03-07 19:17:19]  GET:https://api.weibo.com/2/statuses/public_timeline.json?source=2349798130
+5078   DEBUG [2012-03-07 19:17:19]  Response:
+5079   DEBUG [2012-03-07 19:17:19]  https StatusCode:403
+5079   DEBUG [2012-03-07 19:17:19]  Api-Server-IP:10.73.14.162
+5079   DEBUG [2012-03-07 19:17:19]  Content-Type:application/json;charset=UTF-8
+5079   DEBUG [2012-03-07 19:17:19]  Vary:Accept-Encoding
+5079   DEBUG [2012-03-07 19:17:19]  Server:weibo
+5079   DEBUG [2012-03-07 19:17:19]  Content-Length:125
+5079   DEBUG [2012-03-07 19:17:19]  Date:Wed, 07 Mar 2012 11:17:22 GMT
+5079   DEBUG [2012-03-07 19:17:19]  X-Varnish:1804247955
+5079   DEBUG [2012-03-07 19:17:19]  Age:0
+5079   DEBUG [2012-03-07 19:17:19]  Via:1.1 varnish
+5079   DEBUG [2012-03-07 19:17:19]  Connection:close
+5079   DEBUG [2012-03-07 19:17:19]  SINA-LB:cWgxMzIuaGEucWgyLmJqLmxvYWRiYWxhbmNlLnNpbg==
+5080   DEBUG [2012-03-07 19:17:19]  {"error":"applications over the unaudited use restrictions!","error_code":21321,"request":"/2/statuses/public_timeline.json"}
+
+5080   DEBUG [2012-03-07 19:17:19]  21321 applications over the unaudited use restrictions!
+5081   INFO  [2012-03-07 19:17:19]  2       RunningTime:170ms

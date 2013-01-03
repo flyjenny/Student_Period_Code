@@ -1,0 +1,6 @@
+DriverManager
+ErrorMsg
+QueryManager.Lexer
+QueryManager.Parser
+QueryManager.Parser.Absyn
+QueryManager.Plans

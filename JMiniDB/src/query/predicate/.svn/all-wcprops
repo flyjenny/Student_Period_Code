@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/predicate
+END
+Expression.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/26/trunk/JMiniDB/src/query/predicate/Expression.java
+END
+Predicate.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/63/trunk/JMiniDB/src/query/predicate/Predicate.java
+END
+AllTerm.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/predicate/AllTerm.java
+END
+IntConstant.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/85/trunk/JMiniDB/src/query/predicate/IntConstant.java
+END
+Term.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/28/trunk/JMiniDB/src/query/predicate/Term.java
+END
+AggrFcn.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/predicate/AggrFcn.java
+END
+ExistsTerm.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/predicate/ExistsTerm.java
+END
+COpTerm.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/predicate/COpTerm.java
+END
+QueryScopeException.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/49/trunk/JMiniDB/src/query/predicate/QueryScopeException.java
+END
+AOpExpr.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/63/trunk/JMiniDB/src/query/predicate/AOpExpr.java
+END
+AnyTerm.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/predicate/AnyTerm.java
+END
+FloatConstant.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/85/trunk/JMiniDB/src/query/predicate/FloatConstant.java
+END
+StringConstant.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/85/trunk/JMiniDB/src/query/predicate/StringConstant.java
+END
+FieldNameExpr.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/predicate/FieldNameExpr.java
+END
+SubQueryMismatchException.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/49/trunk/JMiniDB/src/query/predicate/SubQueryMismatchException.java
+END
+TypeMismatchException.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/27/trunk/JMiniDB/src/query/predicate/TypeMismatchException.java
+END
+ConstantExpr.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/26/trunk/JMiniDB/src/query/predicate/ConstantExpr.java
+END
+Constant.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/predicate/Constant.java
+END
+GroupValue.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/58/trunk/JMiniDB/src/query/predicate/GroupValue.java
+END
+InTerm.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/predicate/InTerm.java
+END

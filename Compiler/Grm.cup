@@ -1,0 +1,275 @@
+package Parse;
+
+action code {: static Symbol.Symbol sym(String s) {
+	         return Symbol.Symbol.symbol(s);
+	        }
+	    :};
+
+parser code  {: 
+  public Absyn.Exp parseResult;
+  Lexer lexer;
+
+  public void syntax_error(java_cup.runtime.Symbol current) {
+   report_error("Syntax error (" + current.sym + ")", current);
+  }
+
+  ErrorMsg.ErrorMsg errorMsg;
+
+  public void report_error(String message, 
+			   java_cup.runtime.Symbol info) {
+      errorMsg.error(info.left, message);
+  }
+
+  public Grm(Lexer l, ErrorMsg.ErrorMsg err) {
+    this();
+    errorMsg=err;
+    lexer=l;
+  }
+:};
+
+scan with {: return lexer.nextToken(); :};
+
+terminal String ID, STRING;
+terminal Integer INT;
+terminal COMMA, COLON, SEMICOLON, LPAREN, RPAREN, 
+	LBRACK, RBRACK, LBRACE, RBRACE, DOT, PLUS, MINUS, 
+	TIMES, DIVIDE, EQ, NEQ, LT, LE, GT, GE, AND, OR, 
+	ASSIGN, ARRAY, IF, THEN, ELSE, WHILE, FOR, TO, DO, 
+	LET, IN, END, OF, BREAK, NIL, FUNCTION, VAR, TYPE, UMINUS;
+
+
+non terminal program;
+
+non terminal Absyn.Exp     expr;
+non terminal Absyn.ExpList expr_list;
+non terminal Absyn.FieldExpList field_list;
+non terminal Absyn.Var     lvalue;
+non terminal Absyn.DecList declaration_list;
+non terminal Absyn.Dec     declaration;
+non terminal Absyn.TypeDec type_declaration;
+non terminal Absyn.Ty      type;
+non terminal Absyn.FieldList type_field, type_fields;
+non terminal Absyn.VarDec  variable_declaration;
+non terminal Absyn.FunctionDec function_declaration,function_declarations;
+non terminal Absyn.SeqExp  expr_seq;
+
+
+precedence right FUNCTION, TYPE;
+precedence right OF;
+precedence right DO, ELSE, THEN;
+precedence nonassoc ASSIGN;
+precedence left OR;
+precedence left AND;
+precedence nonassoc EQ, NEQ, LT, LE, GT, GE;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE;
+precedence left UMINUS;
+precedence left LPAREN;
+precedence left LBRACK;
+
+
+start with program;
+
+program ::= expr:e
+		{: RESULT = e; :}
+	    ;  
+
+expr ::= STRING:s
+		{: RESULT = new Absyn.StringExp(sleft, s); :}
+	| INT:i
+		{: RESULT = new Absyn.IntExp(ileft, i); :}					
+	| NIL:n
+	 	{: RESULT = new Absyn.NilExp(nleft); :}				  
+	| lvalue:l
+		{: RESULT = new Absyn.VarExp(lleft, l); :}					
+	| lvalue:l ASSIGN:ass expr:e
+		{: RESULT = new Absyn.AssignExp(assleft, l, e); :}	
+	| expr:e1 PLUS:p expr:e2	{: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.PLUS, e2);  :}
+	| expr:e1 MINUS:p expr:e2	{: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.MINUS, e2);  :}
+	| expr:e1 TIMES:p expr:e2	{: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.MUL, e2);  :}
+	| expr:e1 DIVIDE:p expr:e2	{: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.DIV, e2);  :}
+	
+	| expr:e1 EQ:p expr:e2	{: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.EQ, e2);  :}																		
+	| expr:e1 NEQ:p expr:e2	{: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.NE, e2);  :}
+	| expr:e1 LT:p expr:e2	{: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.LT, e2);  :}
+	| expr:e1 LE:p expr:e2	{: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.LE, e2);  :}
+	| expr:e1 GT:p expr:e2	{: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.GT, e2);  :}
+	| expr:e1 GE:p expr:e2	{: RESULT = new Absyn.OpExp(e1left, e1, Absyn.OpExp.GE, e2);  :}
+	| expr:e1 AND:p expr:e2	{: RESULT = new Absyn.IfExp(e1left, e1, e2, new Absyn.IntExp(e1left, 0)); :}
+	| expr:e1 OR:p expr:e2	{: RESULT = new Absyn.IfExp(e1left, e1, new Absyn.IntExp(e1left, 0), e2); :}
+	
+	//-a
+	| MINUS:p expr:e
+		{: RESULT = new Absyn.OpExp(pleft, new Absyn.IntExp(pleft, 0), Absyn.OpExp.MINUS, e);  :}
+		%prec UMINUS
+	
+		//let
+	//LetExp(int pos, DecList decs, Exp body)
+	| LET:l declaration_list:d IN END:end
+		{: RESULT = new Absyn.LetExp(lleft, d, null); :}							
+	| LET:l declaration_list:d IN expr_seq:e END
+		{: RESULT = new Absyn.LetExp(lleft, d, e); :}
+	
+	//function call	
+	| ID:i LPAREN expr_list:e RPAREN
+		{: RESULT = new Absyn.CallExp(ileft, sym(i), e); :}								
+	| ID:i LPAREN RPAREN
+		{: RESULT = new Absyn.CallExp(ileft, sym(i), null); :}
+	
+	//(x=1;y=2)
+	| LPAREN:l expr_seq:e RPAREN
+		{: RESULT = new Absyn.SeqExp(lleft, e.list); :}				  
+	| LPAREN:l RPAREN
+		{: RESULT = new Absyn.SeqExp(lleft, null); :}
+	
+	//array, such as arr [10] of 0
+	| ID:i LBRACE field_list:f RBRACE
+		{: RESULT = new Absyn.RecordExp(ileft, sym(i), f); :}
+	| ID:i LBRACE RBRACE
+		{: RESULT = new Absyn.RecordExp(ileft, sym(i), null); :}
+	| ID:i LBRACK expr:e1 RBRACK OF expr:e2
+		{: RESULT = new Absyn.ArrayExp(ileft, sym(i), e1, e2); :}
+	
+	//If , While , For
+	| IF:i expr:e1 THEN expr:e2
+		{: RESULT = new Absyn.IfExp(ileft, e1, e2); :}
+	| IF:i expr:e1 THEN expr:e2 ELSE expr:e3
+		{: RESULT = new Absyn.IfExp(ileft, e1, e2, e3); :}
+	| WHILE:w expr:e1 DO expr:e2
+		{: RESULT = new Absyn.WhileExp(wleft, e1, e2); :}
+	| FOR:f variable_declaration:v TO expr:e2 DO expr:e3
+		{: RESULT = new Absyn.ForExp(fleft, v, e2, e3); :}
+	| FOR:f ID:i ASSIGN expr:e1 TO expr:e2 DO expr:e3
+    	{: RESULT = new Absyn.ForExp(fleft,new Absyn.VarDec(ileft,sym(i),null,e1),e2,e3); :}
+	| BREAK:b
+		{: RESULT = new Absyn.BreakExp(bleft); :}
+		
+
+		;
+
+//expression break up by ";", ususlly use at "let" expression
+//SeqExp(int pos, ExpList list)
+expr_seq ::= 
+		  expr:e
+			{: RESULT = new Absyn.SeqExp(eleft, new Absyn.ExpList(e, null)); :}
+		| expr:e SEMICOLON expr_seq:es
+			{: RESULT = new Absyn.SeqExp(eleft, new Absyn.ExpList(e, es.list)); :}
+		;
+
+//expression break up by ",", use at function call					 
+expr_list ::=
+		  expr:e
+			{: RESULT = new Absyn.ExpList(e, null); :}
+		| expr:e COMMA expr_list:el
+			{: RESULT = new Absyn.ExpList(e, el); :}					
+		;
+
+//(abc=10,def="EEE")
+//FieldExpList(int pos, Symbol name, Exp init, FieldExpList tail)
+field_list ::= 	ID:i EQ expr:e
+			{: RESULT = new Absyn.FieldExpList(ileft, sym(i), e, null); :}
+		|  ID:i EQ expr:e COMMA field_list:f
+			{: RESULT = new Absyn.FieldExpList(ileft, sym(i), e, f); :}
+		;
+		
+//SimpleVar(int pos, Symbol name)
+//FieldVar(int pos, Var var, Symbol field)
+//SubscriptVar(int pos, Var var, Exp index)
+lvalue ::=
+	//simple variable
+	  ID:i 
+		{: RESULT = new Absyn.SimpleVar(ileft, sym(i)); :}
+	//such as >> a[4]
+
+	| ID:i LBRACK expr:e RBRACK 
+		{: RESULT = new Absyn.SubscriptVar(ileft, new Absyn.SimpleVar(ileft, sym(i)), e); :}
+
+	//a.b
+	| lvalue:l DOT ID:i
+		{: RESULT = new Absyn.FieldVar(lleft, l, sym(i)); :}
+	
+	| lvalue:l LBRACK expr:e RBRACK
+		{: RESULT = new Absyn.SubscriptVar(lleft, l, e); :}
+	;					
+
+//DecList(Dec head, DecList tail)
+declaration_list ::=
+			  declaration:d
+				{: RESULT = new Absyn.DecList(d, null); :}
+			| declaration:d declaration_list:dl
+				{: RESULT = new Absyn.DecList(d, dl); :}
+			;
+//聲明可以是列表,變量,函數的聲名
+declaration ::=
+		  type_declaration:t
+			{: RESULT = t; :}
+		| variable_declaration:v
+			{: RESULT = v; :}
+		| function_declaration:f
+			{: RESULT = f; :}
+		;
+							
+type_declaration ::=
+			  TYPE:te ID:i EQ type:t
+				{: RESULT = new Absyn.TypeDec(teleft, sym(i), t, null); :}
+			| TYPE:te ID:i EQ type:t type_declaration:td
+				{: RESULT = new Absyn.TypeDec(teleft, sym(i), t, td); :}
+			;
+			
+//NameTy(int pos, Symbol name)
+//RecordTy(int pos, FieldList fields)
+//ArrayTy(int pos, Symbol typ)
+type ::=
+		  ID:i
+			{: RESULT = new Absyn.NameTy(ileft, sym(i)); :}	
+		| ARRAY:a OF ID:i
+			{: RESULT = new Absyn.ArrayTy(aleft, sym(i)); :}
+		| LBRACE:l type_fields:tf RBRACE
+			{: RESULT = new Absyn.RecordTy(lleft, tf); :}
+		| LBRACE:l RBRACE
+			{: RESULT = new Absyn.RecordTy(lleft, null); :}
+		;
+		
+//FieldList(int pos, Symbol name, Symbol typ, FieldList tail)
+type_fields ::=
+		  type_field:tf
+			{: RESULT = new Absyn.FieldList(tfleft, tf.name, tf.typ, null); :}
+		| type_field:tf COMMA type_fields:f
+			{: RESULT = new Absyn.FieldList(tfleft, tf.name, tf.typ, f); :}
+		;
+
+type_field ::=
+		  ID:i1 COLON ID:i2
+			{: RESULT = new Absyn.FieldList(i1left, sym(i1), sym(i2), null); :}
+		;
+
+//VarDec(int pos, Symbol name, NameTy typ, Exp init)
+variable_declaration ::=
+		  VAR:n ID:i ASSIGN expr:e
+			{: RESULT = new Absyn.VarDec(nleft, sym(i), null, e); :}
+		| VAR:n ID:i COLON ID:i2 ASSIGN expr:e
+			{: RESULT = new Absyn.VarDec(nleft, sym(i), new Absyn.NameTy(i2left, sym(i2)), e); :}
+		;
+/*
+function_declarations ::=
+		  function_declaration:f	{: RESULT = f; :}
+		| function_declarations:f1 function_declaration:f2
+			{: RESULT = new Absyn.FunctionDec(f1left, f1.name, f1.params, f1.result, f1.body, f2); :}
+		;
+*/
+//函数声明
+//1.无参数，无返回
+//2.有参数，无返回
+//3.无参数，有返回
+//4.有参数，有返回
+//FunctionDec(int pos, Symbol name, FieldList params, Namety result, Exp body, FunctionDec next)
+function_declaration ::=
+		  FUNCTION:n ID:i LPAREN RPAREN EQ expr:e
+			{: RESULT = new Absyn.FunctionDec(nleft, sym(i), null, null, e, null); :}
+		| FUNCTION:n ID:i LPAREN type_fields:tf RPAREN EQ expr:e
+			{: RESULT = new Absyn.FunctionDec(nleft, sym(i), tf, null, e, null); :}
+		| FUNCTION:n ID:i LPAREN RPAREN COLON ID:i2 EQ expr:e
+			{: RESULT = new Absyn.FunctionDec(nleft, sym(i), null, new Absyn.NameTy(i2left, sym(i2)), e, null); :}
+		| FUNCTION:n ID:i LPAREN type_fields:tf RPAREN COLON ID:i2 EQ expr:e
+			{: RESULT = new Absyn.FunctionDec(nleft, sym(i), tf, new Absyn.NameTy(i2left, sym(i2)), e, null); :}
+		;

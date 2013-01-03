@@ -1,0 +1,14 @@
+/* pre defined function */
+
+(
+	print("sdfklj");
+	flush();
+	getchar();
+	ord("sdfklj");
+	chr(1);
+	size("sdlkjf");
+	substring("sdlfkj", 1, 2);
+	concat("sdlfkj", "sdfklj");
+	not(1);
+	exit(0)
+)

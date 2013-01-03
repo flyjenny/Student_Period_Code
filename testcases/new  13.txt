@@ -1,0 +1,1 @@
+select pc1.model, pc2.model from pc pc1, pc pc2 where pc1.model < pc2.model or pc1.ram = pc2.ram and pc1.speed = pc2.speed

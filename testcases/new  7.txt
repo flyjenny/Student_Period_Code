@@ -1,0 +1,78 @@
+select avg(model.abc)+speed.cc as gigahertz, hd as gigabytes from pc where price < 1000
+
+SelectColumnList(
+  SelectColumn(
+    gigahertz
+    AlgebraBinExp(
+      11
+      AlgebraOp(
+        null
+        null
+        AggregateExp(
+          15
+          Column(
+            model
+            abc
+          ) [Column]
+        ) [AggregateExp]
+      ) [AlgebraOp]
+      AlgebraOp(
+        Column(
+          speed
+          cc
+        ) [Column]
+        null
+        null
+      ) [AlgebraOp]
+    ) [AlgebraBinExp]
+  ) [SelectColumn]
+  SelectColumnList(
+    SelectColumn(
+      gigabytes
+      AlgebraOp(
+        Column(
+          null
+          hd
+        ) [Column]
+        null
+        null
+      ) [AlgebraOp]
+    ) [SelectColumn]
+    null
+  ) [SelectColumnList]
+) [SelectColumnList]
+****************************
+FromTableList(
+  FromTable(
+    pc
+    null
+    null
+  ) [FromTable]
+  null
+) [FromTableList]
+****************************
+WhereExp(
+  CmpExp(
+    false
+    24
+    CmpOp(
+      28
+      Column(
+        null
+        price
+      ) [Column]
+      null
+      null
+    ) [CmpOp]
+    CmpOp(
+      28
+      null
+      null
+      IntExp(
+        1000
+      ) [IntExp]
+    ) [CmpOp]
+  ) [CmpExp]
+  null
+  null
+) [WhereExp]

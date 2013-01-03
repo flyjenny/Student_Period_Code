@@ -1,0 +1,6 @@
+for i:=1 to 2 do
+let
+	var a:=1
+	var a:=(break;"sldkfj")
+in
+end

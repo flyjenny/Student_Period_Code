@@ -1,0 +1,23 @@
+微博相关配置：在Config.properties里
+client_ID ：appkey                           
+client_SERCRET ：app_secret
+redirect_URI : 回调地址
+cookie：模拟网页提交申请
+
+日志相关配置：在log4j.properties里
+去除stdout则没有console输出
+去除D则不会写日志文件在磁盘
+去除R则不会写回滚日志在磁盘
+日志文件默认在/logs/log.log中
+回滚日志文件默认在/logs/weibo.log
+
+运行相关配置:在exec_config.properties里
+db_baseurl：Mysql服务地址
+db_user ：用户名
+db_pwd ：密码
+db_schema ：Mysql中所创建Schema名
+db_weibo_tableName:储存weibo的TableName(在db_schema内)
+db_weiborepostfrom_tableName：储存转发微博的TableName(在db_schema内)
+character_set：字符，默认UTF-8
+
+reflesh_time：每次请求间隔时间 ms

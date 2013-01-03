@@ -1,0 +1,59 @@
+select distinct maker from product, laptop where product.model = laptop.model
+
+SelectColumnList(
+  SelectColumn(
+    null
+    AlgebraOp(
+      Column(
+        null
+        maker
+      ) [Column]
+      null
+      null
+    ) [AlgebraOp]
+  ) [SelectColumn]
+  null
+) [SelectColumnList]
+****************************
+FromTableList(
+  FromTable(
+    product
+    null
+    null
+  ) [FromTable]
+  FromTableList(
+    FromTable(
+      laptop
+      null
+      null
+    ) [FromTable]
+    null
+  ) [FromTableList]
+) [FromTableList]
+****************************
+WhereExp(
+  CmpExp(
+    false
+    20
+    CmpOp(
+      28
+      Column(
+        product
+        model
+      ) [Column]
+      null
+      null
+    ) [CmpOp]
+    CmpOp(
+      28
+      Column(
+        laptop
+        model
+      ) [Column]
+      null
+      null
+    ) [CmpOp]
+  ) [CmpExp]
+  null
+  null
+) [WhereExp]

@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/scan
+END
+CheckScan.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/69/trunk/JMiniDB/src/query/scan/CheckScan.java
+END
+Scan.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/49/trunk/JMiniDB/src/query/scan/Scan.java
+END
+SelectScan.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/63/trunk/JMiniDB/src/query/scan/SelectScan.java
+END
+ProductScan.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/scan/ProductScan.java
+END
+UpdateScan.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/24/trunk/JMiniDB/src/query/scan/UpdateScan.java
+END
+ProjectScan.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/scan/ProjectScan.java
+END
+ExtendScan.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/scan/ExtendScan.java
+END
+TableScan.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/103/trunk/JMiniDB/src/query/scan/TableScan.java
+END
+SortScan.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/68/trunk/JMiniDB/src/query/scan/SortScan.java
+END
+GroupByScan.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/101/trunk/JMiniDB/src/query/scan/GroupByScan.java
+END

@@ -1,0 +1,1 @@
+javac -sourcepath src -classpath lib/java-cup-11a.jar -d bin src/*.java

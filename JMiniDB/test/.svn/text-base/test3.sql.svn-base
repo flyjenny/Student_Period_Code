@@ -1,0 +1,1 @@
+select A.a, B.b from A, B where A.a > 0 and B.b < 0
